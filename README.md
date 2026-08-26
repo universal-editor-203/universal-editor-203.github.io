@@ -1,6 +1,6 @@
-# Universal Editor 203
+# Universal Editor
 
-**All-in-one editor** for ROMs, files, videos, images, and everything else.
+**All-in-one editor** for ROMs, files, videos, images, music, and more.
 
 Signature colors: **Black** & **Orange**.
 
@@ -9,23 +9,23 @@ Creator: [FoxPhantom203](https://github.com/FoxPhantom203)
 
 ---
 
-## Vision
+## Features
 
-A unified workspace that lets you manage and edit:
+- **Video Editor** — powered by FFmpeg.wasm (trim, convert, preview)
+- **ROM Editor** — organize and work with game ROMs
+- **File Editor** — full file browser + text/binary editing
+- **Music Editor** — audio tools and waveform-friendly workspace
+- Unified dark UI with orange accents
 
-- **ROMs** — organize, inspect, and work with game ROMs
-- **Files** — full file browser + editor for any format
-- **Videos** — preview, cut, convert, organize
-- **Images** — edit, resize, convert, manage
-- **Everything else** — one tool instead of ten
+## Live
 
-## Live site
+- Home: https://universal-editor-203.github.io/
+- Editor: https://universal-editor-203.github.io/editor.html
+- Changelog: https://universal-editor-203.github.io/changelog.html
 
-After enabling GitHub Pages: **https://universal-editor-203.github.io/**
+## Version
 
-## Status
-
-Early stage. Landing page is live. Core editor features coming next.
+**1.0.0** — Initial public release
 
 ## License
 

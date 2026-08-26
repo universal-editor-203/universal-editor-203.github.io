@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Universal Editor 203</title>
-  <meta name="description" content="All-in-one editor for ROMs, files, videos, images and more. Black & Orange." />
+  <title>Universal Editor</title>
+  <meta name="description" content="All-in-one editor for ROMs, files, videos, images and music. Black & Orange." />
   <meta name="theme-color" content="#0a0a0a" />
   <style>
     :root {
@@ -13,20 +13,14 @@
       --surface-2: #1c1c1c;
       --orange: #ff6b00;
       --orange-dim: #cc5500;
-      --orange-glow: rgba(255, 107, 0, 0.25);
+      --orange-glow: rgba(255, 107, 0, 0.3);
       --text: #f0f0f0;
       --muted: #888;
       --border: #222;
     }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
@@ -34,11 +28,10 @@
       flex-direction: column;
       line-height: 1.6;
     }
-
     header {
       background: var(--surface);
       border-bottom: 3px solid var(--orange);
-      padding: 1.1rem 2rem;
+      padding: 0.9rem 1.75rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -48,30 +41,33 @@
       top: 0;
       z-index: 100;
     }
-
-    .logo {
-      font-size: 1.4rem;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: inherit;
+    }
+    .logo-svg {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+    }
+    .logo-text {
+      font-size: 1.35rem;
       font-weight: 700;
       letter-spacing: -0.4px;
     }
-
-    .logo span {
-      color: var(--orange);
-    }
-
+    .logo-text span { color: var(--orange); }
     nav a {
       color: var(--muted);
       text-decoration: none;
-      margin-left: 1.4rem;
+      margin-left: 1.3rem;
       font-weight: 500;
       font-size: 0.95rem;
       transition: color 0.2s;
     }
-
-    nav a:hover {
-      color: var(--orange);
-    }
-
+    nav a:hover { color: var(--orange); }
     main {
       flex: 1;
       max-width: 1100px;
@@ -79,146 +75,133 @@
       padding: 3.5rem 1.5rem;
       width: 100%;
     }
-
-    .hero {
-      text-align: center;
-      margin-bottom: 4.5rem;
+    .hero { text-align: center; margin-bottom: 4rem; }
+    .hero-logo {
+      width: 96px;
+      height: 96px;
+      margin: 0 auto 1.5rem;
+      filter: drop-shadow(0 0 20px var(--orange-glow));
     }
-
     .hero h1 {
-      font-size: clamp(2.4rem, 5.5vw, 3.8rem);
-      margin-bottom: 0.9rem;
+      font-size: clamp(2.4rem, 5.5vw, 3.6rem);
+      margin-bottom: 0.85rem;
       line-height: 1.12;
       font-weight: 800;
     }
-
-    .hero h1 span {
-      color: var(--orange);
-    }
-
+    .hero h1 span { color: var(--orange); }
     .hero p {
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       color: var(--muted);
-      max-width: 560px;
-      margin: 0 auto 2.2rem;
+      max-width: 520px;
+      margin: 0 auto 2rem;
     }
-
     .btn {
       display: inline-block;
       background: var(--orange);
       color: #000;
       font-weight: 700;
-      padding: 0.9rem 2.1rem;
+      padding: 0.9rem 2rem;
       border-radius: 8px;
       text-decoration: none;
       transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-      box-shadow: 0 0 0 0 var(--orange-glow);
     }
-
     .btn:hover {
       background: var(--orange-dim);
       transform: translateY(-2px);
       box-shadow: 0 8px 24px var(--orange-glow);
     }
-
     .features {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.4rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.3rem;
     }
-
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 1.7rem;
+      padding: 1.6rem;
       transition: border-color 0.2s, transform 0.2s, background 0.2s;
     }
-
     .card:hover {
       border-color: var(--orange);
       background: var(--surface-2);
-      transform: translateY(-4px);
+      transform: translateY(-3px);
     }
-
-    .card h3 {
-      color: var(--orange);
-      margin-bottom: 0.45rem;
-      font-size: 1.12rem;
-    }
-
-    .card p {
-      color: var(--muted);
-      font-size: 0.94rem;
-    }
-
+    .card h3 { color: var(--orange); margin-bottom: 0.4rem; font-size: 1.1rem; }
+    .card p { color: var(--muted); font-size: 0.93rem; }
     footer {
       text-align: center;
-      padding: 2rem;
+      padding: 1.75rem;
       border-top: 1px solid var(--border);
       color: var(--muted);
       font-size: 0.9rem;
     }
-
-    footer a {
-      color: var(--orange);
-      text-decoration: none;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
+    footer a { color: var(--orange); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
   <header>
-    <div class="logo">Universal <span>Editor</span> 203</div>
+    <a class="brand" href="index.html">
+      <svg class="logo-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#141414"/>
+        <rect x="4" y="4" width="56" height="56" rx="11" stroke="#ff6b00" stroke-width="3"/>
+        <path d="M18 42V22h8.5c5.2 0 8.5 2.8 8.5 7.2 0 3.1-1.6 5.4-4.3 6.5L38 42h-7.2l-5.8-6.2H25V42H18zm7-13.5h1.6c2.1 0 3.4-1.1 3.4-2.8s-1.3-2.7-3.4-2.7H25v5.5z" fill="#ff6b00"/>
+        <circle cx="46" cy="20" r="5" fill="#ff6b00"/>
+      </svg>
+      <div class="logo-text">Universal <span>Editor</span></div>
+    </a>
     <nav>
-      <a href="#features">Features</a>
+      <a href="editor.html">Editor</a>
+      <a href="changelog.html">Changelog</a>
       <a href="https://github.com/universal-editor-203/universal-editor-203.github.io" target="_blank" rel="noopener">GitHub</a>
     </nav>
   </header>
 
   <main>
     <section class="hero">
+      <svg class="hero-logo" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="64" height="64" rx="14" fill="#141414"/>
+        <rect x="4" y="4" width="56" height="56" rx="11" stroke="#ff6b00" stroke-width="3"/>
+        <path d="M18 42V22h8.5c5.2 0 8.5 2.8 8.5 7.2 0 3.1-1.6 5.4-4.3 6.5L38 42h-7.2l-5.8-6.2H25V42H18zm7-13.5h1.6c2.1 0 3.4-1.1 3.4-2.8s-1.3-2.7-3.4-2.7H25v5.5z" fill="#ff6b00"/>
+        <circle cx="46" cy="20" r="5" fill="#ff6b00"/>
+      </svg>
       <h1>One editor.<br><span>Everything.</span></h1>
-      <p>Manage ROMs, files, videos, images and more in a single powerful workspace. Bold black &amp; orange identity.</p>
-      <a class="btn" href="https://github.com/universal-editor-203/universal-editor-203.github.io" target="_blank" rel="noopener">View on GitHub</a>
+      <p>ROMs, files, videos, images, music — all in one powerful black &amp; orange workspace.</p>
+      <a class="btn" href="editor.html">Open Editor</a>
     </section>
 
-    <section id="features">
-      <div class="features">
-        <div class="card">
-          <h3>ROM Management</h3>
-          <p>Organize, inspect and work with game ROMs in one place.</p>
-        </div>
-        <div class="card">
-          <h3>File Editor</h3>
-          <p>Full file browser and editor for virtually any format.</p>
-        </div>
-        <div class="card">
-          <h3>Video Tools</h3>
-          <p>Preview, cut, convert and organize video files seamlessly.</p>
-        </div>
-        <div class="card">
-          <h3>Image Editor</h3>
-          <p>Edit, resize, convert and manage images without leaving the app.</p>
-        </div>
-        <div class="card">
-          <h3>All-in-One</h3>
-          <p>A unified workspace so you stop juggling ten different tools.</p>
-        </div>
-        <div class="card">
-          <h3>Black &amp; Orange</h3>
-          <p>Signature dark theme with sharp orange accents — clean and focused.</p>
-        </div>
+    <section class="features">
+      <div class="card">
+        <h3>Video Editor</h3>
+        <p>Trim, convert and preview with FFmpeg.wasm running fully in the browser.</p>
+      </div>
+      <div class="card">
+        <h3>ROM Editor</h3>
+        <p>Organize, inspect and work with game ROMs in a dedicated panel.</p>
+      </div>
+      <div class="card">
+        <h3>File Editor</h3>
+        <p>Browse and edit text or binary files without leaving the app.</p>
+      </div>
+      <div class="card">
+        <h3>Music Editor</h3>
+        <p>Audio tools and a clean workspace for tracks and samples.</p>
+      </div>
+      <div class="card">
+        <h3>All-in-One</h3>
+        <p>Stop switching apps. One unified interface for everything.</p>
+      </div>
+      <div class="card">
+        <h3>Black &amp; Orange</h3>
+        <p>Signature dark theme with sharp orange accents — focused and bold.</p>
       </div>
     </section>
   </main>
 
   <footer>
     Built by <a href="https://github.com/FoxPhantom203">FoxPhantom203</a> ·
-    <a href="https://github.com/universal-editor-203">universal-editor-203</a>
+    <a href="https://github.com/universal-editor-203">universal-editor-203</a> · v1.0.0
   </footer>
 </body>
 </html>
