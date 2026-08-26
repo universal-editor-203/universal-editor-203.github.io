@@ -342,14 +342,21 @@
 
   <script>
     // —— Tabs ——
+    function activateTab(name) {
+      const valid = ['video', 'rom', 'file', 'music'];
+      if (!valid.includes(name)) name = 'video';
+      document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+      document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + name));
+      history.replaceState(null, '', '#' + name);
+    }
+
     document.querySelectorAll('.tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
-      });
+      tab.addEventListener('click', () => activateTab(tab.dataset.tab));
     });
+
+    // Open tab from URL hash (e.g. editor.html#rom)
+    const hash = (location.hash || '').replace('#', '').toLowerCase();
+    activateTab(hash || 'video');
 
     // —— Shared dropzone helper ——
     function setupDropzone(zoneId, inputId, onFiles) {
@@ -443,7 +450,6 @@
         await ffmpeg.exec(['-i', 'input']);
         setVideoStatus('Info logged to browser console (FFmpeg -i).', 'ok');
       } catch (e) {
-        // FFmpeg -i often "fails" with exit code 1 after printing info
         setVideoStatus('Info printed to console (normal for -i).', 'ok');
       }
     });
