@@ -1,6 +1,6 @@
 # Universal Editor
 
-**All-in-one editor** for ROMs, files, videos, images, music, and more.
+**All-in-one editor** for ROMs, files, videos, music, and Rust.
 
 Signature colors: **Black** & **Orange**.
 
@@ -11,11 +11,12 @@ Creator: [FoxPhantom203](https://github.com/FoxPhantom203)
 
 ## Features
 
-- **Video Editor** — powered by FFmpeg.wasm (trim, convert, preview)
+- **Video Editor** — Filmora-style layout (media bin, preview, properties, timeline tracks) powered by FFmpeg.wasm
 - **ROM Editor** — organize and work with game ROMs
-- **File Editor** — full file browser + text/binary editing
-- **Music Editor** — audio tools and waveform-friendly workspace
-- Unified dark UI with orange accents
+- **File Editor** — full text editing + download
+- **Music Editor** — audio load & preview
+- **Rust Module** — write / template / download `.rs` source in the browser
+- Shared `styles.css` across pages
 
 ## Live
 
@@ -25,7 +26,7 @@ Creator: [FoxPhantom203](https://github.com/FoxPhantom203)
 
 ## Version
 
-**1.0.0** — Initial public release
+**1.1.0** — Video UI overhaul + Rust module + shared CSS
 
 ## License
 

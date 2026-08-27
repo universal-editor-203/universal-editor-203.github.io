@@ -4,70 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Universal Editor</title>
-  <meta name="description" content="All-in-one editor for ROMs, files, videos, images and music. Black & Orange." />
+  <meta name="description" content="All-in-one editor for ROMs, files, videos, images, music and Rust. Black & Orange." />
   <meta name="theme-color" content="#0a0a0a" />
+  <link rel="stylesheet" href="styles.css" />
   <style>
-    :root {
-      --bg: #0a0a0a;
-      --surface: #141414;
-      --surface-2: #1c1c1c;
-      --orange: #ff6b00;
-      --orange-dim: #cc5500;
-      --orange-glow: rgba(255, 107, 0, 0.3);
-      --text: #f0f0f0;
-      --muted: #888;
-      --border: #222;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      line-height: 1.6;
-    }
-    header {
-      background: var(--surface);
-      border-bottom: 3px solid var(--orange);
-      padding: 0.9rem 1.75rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      text-decoration: none;
-      color: inherit;
-    }
-    .logo-svg {
-      width: 40px;
-      height: 40px;
-      flex-shrink: 0;
-    }
-    .logo-text {
-      font-size: 1.35rem;
-      font-weight: 700;
-      letter-spacing: -0.4px;
-    }
-    .logo-text span { color: var(--orange); }
-    nav a {
-      color: var(--muted);
-      text-decoration: none;
-      margin-left: 1.3rem;
-      font-weight: 500;
-      font-size: 0.95rem;
-      transition: color 0.2s;
-    }
-    nav a:hover { color: var(--orange); }
     main {
       flex: 1;
       max-width: 1100px;
@@ -75,7 +15,7 @@
       padding: 3.5rem 1.5rem;
       width: 100%;
     }
-    .hero { text-align: center; margin-bottom: 4rem; }
+    .hero { text-align: center; margin-bottom: 3.5rem; }
     .hero-logo {
       width: 96px;
       height: 96px;
@@ -83,24 +23,24 @@
       filter: drop-shadow(0 0 20px var(--orange-glow));
     }
     .hero h1 {
-      font-size: clamp(2.4rem, 5.5vw, 3.6rem);
-      margin-bottom: 0.85rem;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      margin-bottom: 0.8rem;
       line-height: 1.12;
       font-weight: 800;
     }
     .hero h1 span { color: var(--orange); }
     .hero p {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       color: var(--muted);
       max-width: 520px;
-      margin: 0 auto 2rem;
+      margin: 0 auto 1.75rem;
     }
     .btn {
       display: inline-block;
       background: var(--orange);
       color: #000;
       font-weight: 700;
-      padding: 0.9rem 2rem;
+      padding: 0.85rem 1.9rem;
       border-radius: 8px;
       text-decoration: none;
       transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
@@ -110,37 +50,6 @@
       transform: translateY(-2px);
       box-shadow: 0 8px 24px var(--orange-glow);
     }
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.3rem;
-    }
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.6rem;
-      transition: border-color 0.2s, transform 0.2s, background 0.2s;
-      text-decoration: none;
-      color: inherit;
-      display: block;
-    }
-    .card:hover {
-      border-color: var(--orange);
-      background: var(--surface-2);
-      transform: translateY(-3px);
-    }
-    .card h3 { color: var(--orange); margin-bottom: 0.4rem; font-size: 1.1rem; }
-    .card p { color: var(--muted); font-size: 0.93rem; }
-    footer {
-      text-align: center;
-      padding: 1.75rem;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-    footer a { color: var(--orange); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -170,14 +79,14 @@
         <circle cx="46" cy="20" r="5" fill="#ff6b00"/>
       </svg>
       <h1>One editor.<br><span>Everything.</span></h1>
-      <p>ROMs, files, videos, images, music — all in one powerful black & orange workspace.</p>
+      <p>ROMs, files, videos, music, and now Rust — all in one powerful black &amp; orange workspace. Video editor redesigned like a traditional timeline editor.</p>
       <a class="btn" href="editor.html">Open Editor</a>
     </section>
 
     <section class="features">
       <a class="card" href="editor.html#video">
         <h3>Video Editor</h3>
-        <p>Trim, convert and preview with FFmpeg.wasm running fully in the browser.</p>
+        <p>Filmora-style layout: media bin, preview monitor, properties panel and timeline tracks. Powered by FFmpeg.wasm.</p>
       </a>
       <a class="card" href="editor.html#rom">
         <h3>ROM Editor</h3>
@@ -185,26 +94,26 @@
       </a>
       <a class="card" href="editor.html#file">
         <h3>File Editor</h3>
-        <p>Browse and edit text or binary files without leaving the app.</p>
+        <p>Browse and edit text files without leaving the app.</p>
       </a>
       <a class="card" href="editor.html#music">
         <h3>Music Editor</h3>
         <p>Audio tools and a clean workspace for tracks and samples.</p>
       </a>
-      <a class="card" href="editor.html">
-        <h3>All-in-One</h3>
-        <p>Stop switching apps. One unified interface for everything.</p>
+      <a class="card" href="editor.html#rust">
+        <h3>Rust Module</h3>
+        <p>New language module — write, template and download Rust source right in the browser.</p>
       </a>
       <a class="card" href="editor.html">
-        <h3>Black & Orange</h3>
-        <p>Signature dark theme with sharp orange accents — focused and bold.</p>
+        <h3>Shared CSS</h3>
+        <p>Clean styles.css shared across pages. Black &amp; orange signature theme.</p>
       </a>
     </section>
   </main>
 
   <footer>
     Built by <a href="https://github.com/FoxPhantom203">FoxPhantom203</a> ·
-    <a href="https://github.com/universal-editor-203">universal-editor-203</a> · v1.0.0
+    <a href="https://github.com/universal-editor-203">universal-editor-203</a> · v1.1.0
   </footer>
 </body>
 </html>

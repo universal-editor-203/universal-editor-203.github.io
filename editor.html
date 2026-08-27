@@ -5,224 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Editor — Universal Editor</title>
   <meta name="theme-color" content="#0a0a0a" />
+  <link rel="stylesheet" href="styles.css" />
   <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
   <script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
-  <style>
-    :root {
-      --bg: #0a0a0a;
-      --surface: #141414;
-      --surface-2: #1c1c1c;
-      --orange: #ff6b00;
-      --orange-dim: #cc5500;
-      --orange-glow: rgba(255, 107, 0, 0.25);
-      --text: #f0f0f0;
-      --muted: #888;
-      --border: #222;
-      --success: #2ecc71;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    header {
-      background: var(--surface);
-      border-bottom: 3px solid var(--orange);
-      padding: 0.75rem 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-      text-decoration: none;
-      color: inherit;
-    }
-    .logo-svg { width: 36px; height: 36px; }
-    .logo-text { font-size: 1.2rem; font-weight: 700; }
-    .logo-text span { color: var(--orange); }
-    nav a {
-      color: var(--muted);
-      text-decoration: none;
-      margin-left: 1.1rem;
-      font-weight: 500;
-      font-size: 0.9rem;
-    }
-    nav a:hover, nav a.active { color: var(--orange); }
-
-    .tabs {
-      display: flex;
-      gap: 0.35rem;
-      padding: 0.75rem 1.5rem;
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      overflow-x: auto;
-    }
-    .tab {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--muted);
-      padding: 0.5rem 1.1rem;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 0.9rem;
-      white-space: nowrap;
-      transition: all 0.15s;
-    }
-    .tab:hover { border-color: var(--orange); color: var(--text); }
-    .tab.active {
-      background: var(--orange);
-      border-color: var(--orange);
-      color: #000;
-    }
-
-    .workspace {
-      flex: 1;
-      padding: 1.5rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      width: 100%;
-    }
-    .panel { display: none; }
-    .panel.active { display: block; }
-
-    h2 {
-      font-size: 1.4rem;
-      margin-bottom: 0.35rem;
-    }
-    .sub {
-      color: var(--muted);
-      font-size: 0.9rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .dropzone {
-      border: 2px dashed var(--border);
-      border-radius: 12px;
-      padding: 2rem;
-      text-align: center;
-      background: var(--surface);
-      transition: border-color 0.2s, background 0.2s;
-      cursor: pointer;
-      margin-bottom: 1.25rem;
-    }
-    .dropzone:hover, .dropzone.dragover {
-      border-color: var(--orange);
-      background: var(--surface-2);
-    }
-    .dropzone p { color: var(--muted); margin-top: 0.4rem; font-size: 0.9rem; }
-    .dropzone strong { color: var(--orange); }
-
-    input[type="file"] { display: none; }
-
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-bottom: 1rem;
-    }
-    button, .btn {
-      background: var(--orange);
-      color: #000;
-      border: none;
-      font-weight: 700;
-      padding: 0.55rem 1.1rem;
-      border-radius: 7px;
-      cursor: pointer;
-      font-size: 0.9rem;
-      transition: background 0.15s;
-    }
-    button:hover, .btn:hover { background: var(--orange-dim); }
-    button:disabled {
-      opacity: 0.45;
-      cursor: not-allowed;
-    }
-    button.secondary {
-      background: var(--surface-2);
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-    button.secondary:hover {
-      border-color: var(--orange);
-      color: var(--orange);
-    }
-
-    .status {
-      font-size: 0.85rem;
-      color: var(--muted);
-      min-height: 1.3em;
-      margin-bottom: 0.75rem;
-    }
-    .status.ok { color: var(--success); }
-    .status.err { color: #e74c3c; }
-
-    video, audio {
-      max-width: 100%;
-      border-radius: 10px;
-      background: #000;
-      margin-top: 0.75rem;
-    }
-    video { max-height: 360px; }
-
-    textarea, .file-content {
-      width: 100%;
-      min-height: 220px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      color: var(--text);
-      padding: 1rem;
-      font-family: ui-monospace, 'Cascadia Code', monospace;
-      font-size: 0.9rem;
-      resize: vertical;
-    }
-    textarea:focus { outline: 2px solid var(--orange); outline-offset: -1px; }
-
-    .rom-list, .file-list {
-      list-style: none;
-      margin-top: 0.75rem;
-    }
-    .rom-list li, .file-list li {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.7rem 1rem;
-      margin-bottom: 0.4rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 0.9rem;
-    }
-    .rom-list li span, .file-list li span { color: var(--muted); font-size: 0.8rem; }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-    @media (max-width: 700px) {
-      .grid-2 { grid-template-columns: 1fr; }
-    }
-
-    footer {
-      text-align: center;
-      padding: 1rem;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 0.85rem;
-    }
-    footer a { color: var(--orange); text-decoration: none; }
-  </style>
 </head>
 <body>
   <header>
@@ -248,113 +33,201 @@
     <button class="tab" data-tab="rom">ROM</button>
     <button class="tab" data-tab="file">File</button>
     <button class="tab" data-tab="music">Music</button>
+    <button class="tab" data-tab="rust">Rust</button>
   </div>
 
   <div class="workspace">
-    <!-- VIDEO -->
+    <!-- ========== VIDEO (Filmora-style) ========== -->
     <section id="panel-video" class="panel active">
-      <h2>Video Editor</h2>
-      <p class="sub">Powered by FFmpeg.wasm — runs entirely in your browser. No uploads.</p>
+      <div class="ve">
+        <!-- Toolbar -->
+        <div class="ve-toolbar">
+          <div class="group">
+            <button id="btn-load-ffmpeg">Load FFmpeg</button>
+            <button id="btn-import-video" class="secondary">Import</button>
+          </div>
+          <div class="group">
+            <span class="tool-label">Edit</span>
+            <button id="btn-video-trim" disabled>Trim 5s</button>
+            <button id="btn-video-to-gif" disabled>→ GIF</button>
+            <button id="btn-video-info" disabled class="secondary">Info</button>
+          </div>
+          <div class="group">
+            <button id="btn-video-clear" disabled class="secondary">Clear</button>
+          </div>
+          <div class="group" style="margin-left:auto">
+            <span class="status" id="video-status">Load FFmpeg to start</span>
+          </div>
+        </div>
 
-      <div class="dropzone" id="video-drop">
-        <strong>Drop a video here</strong> or click to choose
-        <p>MP4, WebM, MOV, MKV…</p>
-        <input type="file" id="video-input" accept="video/*" />
+        <!-- Main area -->
+        <div class="ve-main">
+          <!-- Media library -->
+          <aside class="ve-sidebar">
+            <h3>Media</h3>
+            <div class="dropzone" id="video-drop" style="padding:1rem; margin-bottom:0.75rem; font-size:0.85rem;">
+              <strong>Drop video</strong>
+              <p style="margin-top:0.25rem">or click</p>
+              <input type="file" id="video-input" accept="video/*" />
+            </div>
+            <div id="ve-media-list"></div>
+          </aside>
+
+          <!-- Preview -->
+          <div class="ve-preview">
+            <div class="ve-preview-stage">
+              <video id="video-preview" controls></video>
+            </div>
+            <div class="ve-preview-controls">
+              <button id="ve-play" class="secondary">Play</button>
+              <span class="ve-time" id="ve-time">00:00 / 00:00</span>
+              <div id="video-download"></div>
+            </div>
+          </div>
+
+          <!-- Properties -->
+          <aside class="ve-props">
+            <h3>Properties</h3>
+            <div class="ve-prop-row">
+              <label>Speed</label>
+              <input type="range" id="prop-speed" min="0.25" max="2" step="0.25" value="1" />
+            </div>
+            <div class="ve-prop-row">
+              <label>Volume</label>
+              <input type="range" id="prop-volume" min="0" max="1" step="0.05" value="1" />
+            </div>
+            <div class="ve-prop-row">
+              <label>Trim start (s)</label>
+              <input type="number" id="prop-trim-start" min="0" value="0" step="0.1" />
+            </div>
+            <div class="ve-prop-row">
+              <label>Duration (s)</label>
+              <input type="number" id="prop-duration" min="0.1" value="5" step="0.1" />
+            </div>
+            <div class="ve-prop-row">
+              <label>Export</label>
+              <select id="prop-format">
+                <option value="mp4">MP4</option>
+                <option value="gif">GIF</option>
+                <option value="webm">WebM</option>
+              </select>
+            </div>
+          </aside>
+        </div>
+
+        <!-- Timeline -->
+        <div class="ve-timeline">
+          <div class="ve-timeline-ruler" id="ve-ruler"></div>
+          <div class="ve-timeline-tracks">
+            <div class="ve-playhead" id="ve-playhead"></div>
+            <div class="ve-track">
+              <div class="ve-track-label">V1</div>
+              <div class="ve-clip" id="ve-clip-video" style="display:none; width:180px;">Video clip</div>
+            </div>
+            <div class="ve-track">
+              <div class="ve-track-label">A1</div>
+              <div class="ve-clip audio" id="ve-clip-audio" style="display:none; width:180px;">Audio</div>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div class="status" id="video-status">Load FFmpeg to start (first time may take a few seconds).</div>
-
-      <div class="controls">
-        <button id="btn-load-ffmpeg">Load FFmpeg</button>
-        <button id="btn-video-info" disabled>Get Info</button>
-        <button id="btn-video-trim" disabled>Trim (first 5s)</button>
-        <button id="btn-video-to-gif" disabled>Convert → GIF (3s)</button>
-        <button class="secondary" id="btn-video-clear" disabled>Clear</button>
-      </div>
-
-      <video id="video-preview" controls></video>
-      <div id="video-download" style="margin-top:0.75rem"></div>
     </section>
 
-    <!-- ROM -->
+    <!-- ========== ROM ========== -->
     <section id="panel-rom" class="panel">
-      <h2>ROM Editor</h2>
-      <p class="sub">Add, inspect and organize game ROMs. Files stay in your browser.</p>
-
-      <div class="dropzone" id="rom-drop">
-        <strong>Drop ROM files here</strong> or click to choose
-        <p>.nes, .sfc, .gba, .n64, .iso, .bin…</p>
-        <input type="file" id="rom-input" accept=".nes,.sfc,.smc,.gba,.gbc,.gb,.n64,.z64,.v64,.iso,.bin,.cue,.chd,.nds,.3ds" multiple />
+      <div class="simple-workspace">
+        <h2>ROM Editor</h2>
+        <p class="sub">Add, inspect and organize game ROMs. Files stay in your browser.</p>
+        <div class="dropzone" id="rom-drop">
+          <strong>Drop ROM files here</strong> or click to choose
+          <p>.nes, .sfc, .gba, .n64, .iso, .bin…</p>
+          <input type="file" id="rom-input" accept=".nes,.sfc,.smc,.gba,.gbc,.gb,.n64,.z64,.v64,.iso,.bin,.cue,.chd,.nds,.3ds" multiple />
+        </div>
+        <div class="controls">
+          <button id="btn-rom-clear" class="secondary">Clear list</button>
+        </div>
+        <ul class="rom-list" id="rom-list"></ul>
       </div>
-
-      <div class="controls">
-        <button id="btn-rom-clear" class="secondary">Clear list</button>
-      </div>
-
-      <ul class="rom-list" id="rom-list"></ul>
     </section>
 
-    <!-- FILE -->
+    <!-- ========== FILE ========== -->
     <section id="panel-file" class="panel">
-      <h2>File Editor</h2>
-      <p class="sub">Open any text file, edit, and download the result.</p>
-
-      <div class="dropzone" id="file-drop">
-        <strong>Drop a file here</strong> or click to choose
-        <p>Text, code, configs, logs…</p>
-        <input type="file" id="file-input" />
+      <div class="simple-workspace">
+        <h2>File Editor</h2>
+        <p class="sub">Open any text file, edit, and download the result.</p>
+        <div class="dropzone" id="file-drop">
+          <strong>Drop a file here</strong> or click to choose
+          <p>Text, code, configs, logs…</p>
+          <input type="file" id="file-input" />
+        </div>
+        <div class="controls">
+          <button id="btn-file-save" disabled>Download edited</button>
+          <button class="secondary" id="btn-file-clear" disabled>Clear</button>
+        </div>
+        <div class="status" id="file-status"></div>
+        <textarea id="file-content" placeholder="File content will appear here…" spellcheck="false"></textarea>
       </div>
-
-      <div class="controls">
-        <button id="btn-file-save" disabled>Download edited</button>
-        <button class="secondary" id="btn-file-clear" disabled>Clear</button>
-      </div>
-
-      <div class="status" id="file-status"></div>
-      <textarea id="file-content" placeholder="File content will appear here…" spellcheck="false"></textarea>
     </section>
 
-    <!-- MUSIC -->
+    <!-- ========== MUSIC ========== -->
     <section id="panel-music" class="panel">
-      <h2>Music Editor</h2>
-      <p class="sub">Load audio tracks, preview, and prepare for further processing.</p>
-
-      <div class="dropzone" id="music-drop">
-        <strong>Drop audio here</strong> or click to choose
-        <p>MP3, WAV, OGG, FLAC, M4A…</p>
-        <input type="file" id="music-input" accept="audio/*" />
+      <div class="simple-workspace">
+        <h2>Music Editor</h2>
+        <p class="sub">Load audio tracks, preview, and prepare for further processing.</p>
+        <div class="dropzone" id="music-drop">
+          <strong>Drop audio here</strong> or click to choose
+          <p>MP3, WAV, OGG, FLAC, M4A…</p>
+          <input type="file" id="music-input" accept="audio/*" />
+        </div>
+        <div class="controls">
+          <button id="btn-music-info" disabled>Show Info</button>
+          <button class="secondary" id="btn-music-clear" disabled>Clear</button>
+        </div>
+        <div class="status" id="music-status"></div>
+        <audio id="music-preview" controls></audio>
       </div>
+    </section>
 
-      <div class="controls">
-        <button id="btn-music-info" disabled>Show Info</button>
-        <button class="secondary" id="btn-music-clear" disabled>Clear</button>
+    <!-- ========== RUST ========== -->
+    <section id="panel-rust" class="panel">
+      <div class="rust-editor">
+        <div class="rust-toolbar">
+          <button id="btn-rust-template">Load template</button>
+          <button id="btn-rust-download" class="secondary">Download .rs</button>
+          <button id="btn-rust-clear" class="secondary">Clear</button>
+          <span class="status" id="rust-status" style="margin-left:0.5rem">Rust module — edit &amp; download</span>
+        </div>
+        <div class="rust-body">
+          <div class="rust-code-wrap">
+            <div class="rust-label">main.rs</div>
+            <textarea id="rust-code" spellcheck="false" placeholder="// Write Rust here…"></textarea>
+          </div>
+          <div class="rust-output-wrap">
+            <div class="rust-label">Notes / Output</div>
+            <textarea id="rust-output" readonly placeholder="Tips and notes appear here. (No remote compile — browser only)"></textarea>
+          </div>
+        </div>
       </div>
-
-      <div class="status" id="music-status"></div>
-      <audio id="music-preview" controls></audio>
     </section>
   </div>
 
   <footer>
-    Universal Editor · v1.0.0 · FFmpeg.wasm ·
+    Universal Editor · v1.1.0 · FFmpeg.wasm ·
     <a href="changelog.html">Changelog</a>
   </footer>
 
   <script>
     // —— Tabs ——
     function activateTab(name) {
-      const valid = ['video', 'rom', 'file', 'music'];
+      const valid = ['video', 'rom', 'file', 'music', 'rust'];
       if (!valid.includes(name)) name = 'video';
       document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
       document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + name));
       history.replaceState(null, '', '#' + name);
     }
-
     document.querySelectorAll('.tab').forEach(tab => {
       tab.addEventListener('click', () => activateTab(tab.dataset.tab));
     });
-
-    // Open tab from URL hash (e.g. editor.html#rom)
     const hash = (location.hash || '').replace('#', '').toLowerCase();
     activateTab(hash || 'video');
 
@@ -375,7 +248,7 @@
       });
     }
 
-    // —— FFmpeg (Video) ——
+    // —— FFmpeg / Video ——
     let ffmpeg = null;
     let videoFile = null;
 
@@ -391,10 +264,28 @@
       videoStatus.className = 'status' + (type ? ' ' + type : '');
     }
 
+    function updateMediaList() {
+      const list = document.getElementById('ve-media-list');
+      if (!videoFile) {
+        list.innerHTML = '<p style="color:var(--muted);font-size:0.8rem">No media yet</p>';
+        document.getElementById('ve-clip-video').style.display = 'none';
+        document.getElementById('ve-clip-audio').style.display = 'none';
+        return;
+      }
+      list.innerHTML = `<div class="ve-media-item active">
+        <div class="icon">▶</div>
+        <div style="overflow:hidden;text-overflow:ellipsis">${videoFile.name}</div>
+      </div>`;
+      const clip = document.getElementById('ve-clip-video');
+      clip.style.display = 'flex';
+      clip.textContent = videoFile.name.slice(0, 18) + (videoFile.name.length > 18 ? '…' : '');
+      document.getElementById('ve-clip-audio').style.display = 'flex';
+    }
+
     document.getElementById('btn-load-ffmpeg').addEventListener('click', async () => {
       const btn = document.getElementById('btn-load-ffmpeg');
       btn.disabled = true;
-      setVideoStatus('Loading FFmpeg core… (first load can take ~10–20s)');
+      setVideoStatus('Loading FFmpeg…');
       try {
         ffmpeg = new FFmpeg();
         ffmpeg.on('log', ({ message }) => console.log('[ffmpeg]', message));
@@ -406,28 +297,35 @@
           coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
           wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
         });
-        setVideoStatus('FFmpeg ready. Drop a video.', 'ok');
-        document.getElementById('btn-video-info').disabled = !videoFile;
-        document.getElementById('btn-video-trim').disabled = !videoFile;
-        document.getElementById('btn-video-to-gif').disabled = !videoFile;
+        setVideoStatus('FFmpeg ready', 'ok');
+        const ready = !!videoFile;
+        document.getElementById('btn-video-info').disabled = !ready;
+        document.getElementById('btn-video-trim').disabled = !ready;
+        document.getElementById('btn-video-to-gif').disabled = !ready;
       } catch (err) {
         console.error(err);
-        setVideoStatus('Failed to load FFmpeg: ' + err.message, 'err');
+        setVideoStatus('Failed: ' + err.message, 'err');
         btn.disabled = false;
       }
     });
 
-    setupDropzone('video-drop', 'video-input', files => {
+    function loadVideo(files) {
       videoFile = files[0];
       const url = URL.createObjectURL(videoFile);
       videoPreview.src = url;
       videoDownload.innerHTML = '';
-      setVideoStatus(`Loaded: ${videoFile.name} (${(videoFile.size / 1024 / 1024).toFixed(2)} MB)`);
+      setVideoStatus(`Loaded: ${videoFile.name}`);
       const ready = !!ffmpeg;
       document.getElementById('btn-video-info').disabled = !ready;
       document.getElementById('btn-video-trim').disabled = !ready;
       document.getElementById('btn-video-to-gif').disabled = !ready;
       document.getElementById('btn-video-clear').disabled = false;
+      updateMediaList();
+    }
+
+    setupDropzone('video-drop', 'video-input', loadVideo);
+    document.getElementById('btn-import-video').addEventListener('click', () => {
+      document.getElementById('video-input').click();
     });
 
     document.getElementById('btn-video-clear').addEventListener('click', () => {
@@ -435,11 +333,12 @@
       videoPreview.removeAttribute('src');
       videoPreview.load();
       videoDownload.innerHTML = '';
-      setVideoStatus(ffmpeg ? 'FFmpeg ready. Drop a video.' : 'Load FFmpeg to start.');
+      setVideoStatus(ffmpeg ? 'FFmpeg ready' : 'Load FFmpeg to start');
       document.getElementById('btn-video-info').disabled = true;
       document.getElementById('btn-video-trim').disabled = true;
       document.getElementById('btn-video-to-gif').disabled = true;
       document.getElementById('btn-video-clear').disabled = true;
+      updateMediaList();
     });
 
     document.getElementById('btn-video-info').addEventListener('click', async () => {
@@ -448,24 +347,26 @@
       try {
         await ffmpeg.writeFile('input', await fetchFile(videoFile));
         await ffmpeg.exec(['-i', 'input']);
-        setVideoStatus('Info logged to browser console (FFmpeg -i).', 'ok');
+        setVideoStatus('Info logged to console', 'ok');
       } catch (e) {
-        setVideoStatus('Info printed to console (normal for -i).', 'ok');
+        setVideoStatus('Info printed to console', 'ok');
       }
     });
 
     document.getElementById('btn-video-trim').addEventListener('click', async () => {
       if (!ffmpeg || !videoFile) return;
-      setVideoStatus('Trimming first 5 seconds…');
+      const start = parseFloat(document.getElementById('prop-trim-start').value) || 0;
+      const dur = parseFloat(document.getElementById('prop-duration').value) || 5;
+      setVideoStatus(`Trimming ${dur}s from ${start}s…`);
       try {
         await ffmpeg.writeFile('input', await fetchFile(videoFile));
-        await ffmpeg.exec(['-i', 'input', '-t', '5', '-c', 'copy', 'out.mp4']);
+        await ffmpeg.exec(['-i', 'input', '-ss', String(start), '-t', String(dur), '-c', 'copy', 'out.mp4']);
         const data = await ffmpeg.readFile('out.mp4');
         const blob = new Blob([data.buffer], { type: 'video/mp4' });
         const url = URL.createObjectURL(blob);
         videoPreview.src = url;
-        videoDownload.innerHTML = `<a class="btn" href="${url}" download="trimmed.mp4">Download trimmed.mp4</a>`;
-        setVideoStatus('Trim complete.', 'ok');
+        videoDownload.innerHTML = `<a class="btn" href="${url}" download="trimmed.mp4">Download</a>`;
+        setVideoStatus('Trim complete', 'ok');
       } catch (err) {
         console.error(err);
         setVideoStatus('Trim failed: ' + err.message, 'err');
@@ -474,7 +375,7 @@
 
     document.getElementById('btn-video-to-gif').addEventListener('click', async () => {
       if (!ffmpeg || !videoFile) return;
-      setVideoStatus('Converting first 3s to GIF…');
+      setVideoStatus('Converting to GIF…');
       try {
         await ffmpeg.writeFile('input', await fetchFile(videoFile));
         await ffmpeg.exec([
@@ -486,23 +387,50 @@
         const data = await ffmpeg.readFile('out.gif');
         const blob = new Blob([data.buffer], { type: 'image/gif' });
         const url = URL.createObjectURL(blob);
-        videoDownload.innerHTML = `<a class="btn" href="${url}" download="clip.gif">Download clip.gif</a>`;
-        setVideoStatus('GIF ready.', 'ok');
+        videoDownload.innerHTML = `<a class="btn" href="${url}" download="clip.gif">Download GIF</a>`;
+        setVideoStatus('GIF ready', 'ok');
       } catch (err) {
         console.error(err);
-        setVideoStatus('GIF convert failed: ' + err.message, 'err');
+        setVideoStatus('GIF failed: ' + err.message, 'err');
       }
+    });
+
+    // Preview controls
+    document.getElementById('ve-play').addEventListener('click', () => {
+      if (videoPreview.paused) videoPreview.play();
+      else videoPreview.pause();
+    });
+    videoPreview.addEventListener('timeupdate', () => {
+      const t = videoPreview.currentTime || 0;
+      const d = videoPreview.duration || 0;
+      const fmt = s => {
+        const m = Math.floor(s / 60);
+        const sec = Math.floor(s % 60);
+        return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+      };
+      document.getElementById('ve-time').textContent = `${fmt(t)} / ${fmt(d)}`;
+      // Move playhead roughly
+      const head = document.getElementById('ve-playhead');
+      if (d > 0) {
+        const pct = t / d;
+        head.style.left = (60 + pct * 180) + 'px';
+      }
+    });
+    document.getElementById('prop-volume').addEventListener('input', e => {
+      videoPreview.volume = parseFloat(e.target.value);
+    });
+    document.getElementById('prop-speed').addEventListener('input', e => {
+      videoPreview.playbackRate = parseFloat(e.target.value);
     });
 
     // —— ROM ——
     const romList = document.getElementById('rom-list');
     let roms = [];
-
     function renderRoms() {
       romList.innerHTML = roms.map((r, i) => `
         <li>
           <div><strong>${r.name}</strong><br><span>${(r.size / 1024).toFixed(1)} KB</span></div>
-          <button class="secondary" data-i="${i}" style="padding:0.35rem 0.7rem;font-size:0.8rem">Remove</button>
+          <button class="secondary" data-i="${i}" style="padding:0.3rem 0.6rem;font-size:0.75rem">Remove</button>
         </li>
       `).join('') || '<li style="color:var(--muted)">No ROMs yet</li>';
       romList.querySelectorAll('button').forEach(btn => {
@@ -512,23 +440,15 @@
         });
       });
     }
-
     setupDropzone('rom-drop', 'rom-input', files => {
-      for (const f of files) {
-        roms.push({ name: f.name, size: f.size, file: f });
-      }
+      for (const f of files) roms.push({ name: f.name, size: f.size, file: f });
       renderRoms();
     });
-
-    document.getElementById('btn-rom-clear').addEventListener('click', () => {
-      roms = [];
-      renderRoms();
-    });
+    document.getElementById('btn-rom-clear').addEventListener('click', () => { roms = []; renderRoms(); });
     renderRoms();
 
     // —— File ——
     let currentFileName = 'edited.txt';
-
     setupDropzone('file-drop', 'file-input', files => {
       const f = files[0];
       currentFileName = f.name;
@@ -541,7 +461,6 @@
       };
       reader.readAsText(f);
     });
-
     document.getElementById('btn-file-save').addEventListener('click', () => {
       const text = document.getElementById('file-content').value;
       const blob = new Blob([text], { type: 'text/plain' });
@@ -550,7 +469,6 @@
       a.download = currentFileName;
       a.click();
     });
-
     document.getElementById('btn-file-clear').addEventListener('click', () => {
       document.getElementById('file-content').value = '';
       document.getElementById('file-status').textContent = '';
@@ -562,7 +480,6 @@
     let musicFile = null;
     const musicPreview = document.getElementById('music-preview');
     const musicStatus = document.getElementById('music-status');
-
     setupDropzone('music-drop', 'music-input', files => {
       musicFile = files[0];
       musicPreview.src = URL.createObjectURL(musicFile);
@@ -570,12 +487,10 @@
       document.getElementById('btn-music-info').disabled = false;
       document.getElementById('btn-music-clear').disabled = false;
     });
-
     document.getElementById('btn-music-info').addEventListener('click', () => {
       if (!musicFile) return;
       musicStatus.textContent = `${musicFile.name} · ${musicFile.type || 'audio'} · ${(musicFile.size / 1024).toFixed(1)} KB`;
     });
-
     document.getElementById('btn-music-clear').addEventListener('click', () => {
       musicFile = null;
       musicPreview.removeAttribute('src');
@@ -584,6 +499,55 @@
       document.getElementById('btn-music-info').disabled = true;
       document.getElementById('btn-music-clear').disabled = true;
     });
+
+    // —— Rust module ——
+    const RUST_TEMPLATE = `fn main() {
+    println!("Hello from Universal Editor!");
+    let numbers = vec![1, 2, 3, 4, 5];
+    let sum: i32 = numbers.iter().sum();
+    println!("Sum: {}", sum);
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn it_works() {
+        assert_eq!(2 + 2, 4);
+    }
+}
+`;
+    const rustCode = document.getElementById('rust-code');
+    const rustOutput = document.getElementById('rust-output');
+    const rustStatus = document.getElementById('rust-status');
+
+    document.getElementById('btn-rust-template').addEventListener('click', () => {
+      rustCode.value = RUST_TEMPLATE;
+      rustOutput.value = 'Template loaded.\n\nThis is a browser-side Rust editor module.\nNo remote compilation — use rustc or cargo locally after downloading.';
+      rustStatus.textContent = 'Template loaded';
+      rustStatus.className = 'status ok';
+    });
+
+    document.getElementById('btn-rust-download').addEventListener('click', () => {
+      const text = rustCode.value || '// empty';
+      const blob = new Blob([text], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'main.rs';
+      a.click();
+      rustStatus.textContent = 'Downloaded main.rs';
+      rustStatus.className = 'status ok';
+    });
+
+    document.getElementById('btn-rust-clear').addEventListener('click', () => {
+      rustCode.value = '';
+      rustOutput.value = '';
+      rustStatus.textContent = 'Cleared';
+      rustStatus.className = 'status';
+    });
+
+    // Default template on first open of rust tab
+    rustCode.value = RUST_TEMPLATE;
+    rustOutput.value = 'Rust language module ready.\nEdit the code on the left and download as main.rs.\n(Compile with rustc / cargo on your machine.)';
   </script>
 </body>
 </html>

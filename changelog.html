@@ -5,54 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Changelog — Universal Editor</title>
   <meta name="theme-color" content="#0a0a0a" />
+  <link rel="stylesheet" href="styles.css" />
   <style>
-    :root {
-      --bg: #0a0a0a;
-      --surface: #141414;
-      --orange: #ff6b00;
-      --text: #f0f0f0;
-      --muted: #888;
-      --border: #222;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      line-height: 1.6;
-    }
-    header {
-      background: var(--surface);
-      border-bottom: 3px solid var(--orange);
-      padding: 0.85rem 1.75rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-      text-decoration: none;
-      color: inherit;
-    }
-    .logo-svg { width: 36px; height: 36px; }
-    .logo-text { font-size: 1.2rem; font-weight: 700; }
-    .logo-text span { color: var(--orange); }
-    nav a {
-      color: var(--muted);
-      text-decoration: none;
-      margin-left: 1.2rem;
-      font-weight: 500;
-      font-size: 0.9rem;
-    }
-    nav a:hover, nav a.active { color: var(--orange); }
-
     main {
       flex: 1;
       max-width: 720px;
@@ -60,16 +14,12 @@
       padding: 2.5rem 1.5rem;
       width: 100%;
     }
-    h1 {
-      font-size: 1.8rem;
-      margin-bottom: 1.75rem;
-    }
+    h1 { font-size: 1.8rem; margin-bottom: 1.75rem; }
     h1 span { color: var(--orange); }
-
     .release {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: var(--radius-md);
       padding: 1.5rem;
       margin-bottom: 1.25rem;
     }
@@ -81,27 +31,11 @@
       gap: 0.5rem;
       margin-bottom: 0.85rem;
     }
-    .version {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--orange);
-    }
+    .version { font-size: 1.25rem; font-weight: 700; color: var(--orange); }
     .date { color: var(--muted); font-size: 0.9rem; }
-    .release ul {
-      padding-left: 1.25rem;
-      color: var(--muted);
-    }
+    .release ul { padding-left: 1.25rem; color: var(--muted); }
     .release li { margin-bottom: 0.35rem; }
     .release li strong { color: var(--text); }
-
-    footer {
-      text-align: center;
-      padding: 1.25rem;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 0.85rem;
-    }
-    footer a { color: var(--orange); text-decoration: none; }
   </style>
 </head>
 <body>
@@ -125,6 +59,20 @@
 
   <main>
     <h1>Changelog</h1>
+
+    <article class="release">
+      <div class="release-header">
+        <span class="version">v1.1.0</span>
+        <span class="date">August 27, 2026</span>
+      </div>
+      <ul>
+        <li><strong>Video Editor redesign</strong> — Filmora / traditional layout: media bin, preview monitor, properties panel, timeline with V1/A1 tracks and playhead</li>
+        <li><strong>Rust language module</strong> — new tab with template, editor and .rs download</li>
+        <li><strong>Shared styles.css</strong> — extracted and expanded CSS for all pages</li>
+        <li>Trim controls linked to properties (start + duration)</li>
+        <li>Speed &amp; volume controls on the preview</li>
+      </ul>
+    </article>
 
     <article class="release">
       <div class="release-header">
