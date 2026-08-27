@@ -22,7 +22,6 @@ Creator: [FoxPhantom203](https://github.com/FoxPhantom203)
 
 - Home: https://universal-editor-203.github.io/
 - Editor: https://universal-editor-203.github.io/editor.html
-- Changelog: https://universal-editor-203.github.io/changelog.html
 
 ## Version
 
