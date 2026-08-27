@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Editor — Universal Editor</title>
   <meta name="theme-color" content="#0a0a0a" />
+  <meta name="description" content="Universal Editor by FoxPhantom203. Not affiliated with Adobe." />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="styles.css" />
   <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
   <script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
@@ -40,7 +42,6 @@
     <!-- ========== VIDEO (Filmora-style) ========== -->
     <section id="panel-video" class="panel active">
       <div class="ve">
-        <!-- Toolbar -->
         <div class="ve-toolbar">
           <div class="group">
             <button id="btn-load-ffmpeg">Load FFmpeg</button>
@@ -60,9 +61,7 @@
           </div>
         </div>
 
-        <!-- Main area -->
         <div class="ve-main">
-          <!-- Media library -->
           <aside class="ve-sidebar">
             <h3>Media</h3>
             <div class="dropzone" id="video-drop" style="padding:1rem; margin-bottom:0.75rem; font-size:0.85rem;">
@@ -73,7 +72,6 @@
             <div id="ve-media-list"></div>
           </aside>
 
-          <!-- Preview -->
           <div class="ve-preview">
             <div class="ve-preview-stage">
               <video id="video-preview" controls></video>
@@ -85,7 +83,6 @@
             </div>
           </div>
 
-          <!-- Properties -->
           <aside class="ve-props">
             <h3>Properties</h3>
             <div class="ve-prop-row">
@@ -115,7 +112,6 @@
           </aside>
         </div>
 
-        <!-- Timeline -->
         <div class="ve-timeline">
           <div class="ve-timeline-ruler" id="ve-ruler"></div>
           <div class="ve-timeline-tracks">
@@ -133,7 +129,6 @@
       </div>
     </section>
 
-    <!-- ========== ROM ========== -->
     <section id="panel-rom" class="panel">
       <div class="simple-workspace">
         <h2>ROM Editor</h2>
@@ -150,7 +145,6 @@
       </div>
     </section>
 
-    <!-- ========== FILE ========== -->
     <section id="panel-file" class="panel">
       <div class="simple-workspace">
         <h2>File Editor</h2>
@@ -169,7 +163,6 @@
       </div>
     </section>
 
-    <!-- ========== MUSIC ========== -->
     <section id="panel-music" class="panel">
       <div class="simple-workspace">
         <h2>Music Editor</h2>
@@ -188,7 +181,6 @@
       </div>
     </section>
 
-    <!-- ========== RUST ========== -->
     <section id="panel-rust" class="panel">
       <div class="rust-editor">
         <div class="rust-toolbar">
@@ -212,12 +204,12 @@
   </div>
 
   <footer>
-    Universal Editor · v1.1.0 · FFmpeg.wasm ·
+    Universal Editor · v1.1.5 · FFmpeg.wasm ·
     <a href="changelog.html">Changelog</a>
+    · Not affiliated with Adobe
   </footer>
 
   <script>
-    // —— Tabs ——
     function activateTab(name) {
       const valid = ['video', 'rom', 'file', 'music', 'rust'];
       if (!valid.includes(name)) name = 'video';
@@ -231,7 +223,6 @@
     const hash = (location.hash || '').replace('#', '').toLowerCase();
     activateTab(hash || 'video');
 
-    // —— Shared dropzone helper ——
     function setupDropzone(zoneId, inputId, onFiles) {
       const zone = document.getElementById(zoneId);
       const input = document.getElementById(inputId);
@@ -248,13 +239,10 @@
       });
     }
 
-    // —— FFmpeg / Video ——
     let ffmpeg = null;
     let videoFile = null;
-
     const { FFmpeg } = FFmpegWASM;
     const { fetchFile, toBlobURL } = FFmpegUtil;
-
     const videoStatus = document.getElementById('video-status');
     const videoPreview = document.getElementById('video-preview');
     const videoDownload = document.getElementById('video-download');
@@ -272,10 +260,7 @@
         document.getElementById('ve-clip-audio').style.display = 'none';
         return;
       }
-      list.innerHTML = `<div class="ve-media-item active">
-        <div class="icon">▶</div>
-        <div style="overflow:hidden;text-overflow:ellipsis">${videoFile.name}</div>
-      </div>`;
+      list.innerHTML = `<div class="ve-media-item active"><div class="icon">▶</div><div style="overflow:hidden;text-overflow:ellipsis">${videoFile.name}</div></div>`;
       const clip = document.getElementById('ve-clip-video');
       clip.style.display = 'flex';
       clip.textContent = videoFile.name.slice(0, 18) + (videoFile.name.length > 18 ? '…' : '');
@@ -311,8 +296,7 @@
 
     function loadVideo(files) {
       videoFile = files[0];
-      const url = URL.createObjectURL(videoFile);
-      videoPreview.src = url;
+      videoPreview.src = URL.createObjectURL(videoFile);
       videoDownload.innerHTML = '';
       setVideoStatus(`Loaded: ${videoFile.name}`);
       const ready = !!ffmpeg;
@@ -324,9 +308,7 @@
     }
 
     setupDropzone('video-drop', 'video-input', loadVideo);
-    document.getElementById('btn-import-video').addEventListener('click', () => {
-      document.getElementById('video-input').click();
-    });
+    document.getElementById('btn-import-video').addEventListener('click', () => document.getElementById('video-input').click());
 
     document.getElementById('btn-video-clear').addEventListener('click', () => {
       videoFile = null;
@@ -378,12 +360,7 @@
       setVideoStatus('Converting to GIF…');
       try {
         await ffmpeg.writeFile('input', await fetchFile(videoFile));
-        await ffmpeg.exec([
-          '-i', 'input',
-          '-t', '3',
-          '-vf', 'fps=10,scale=320:-1:flags=lanczos',
-          'out.gif'
-        ]);
+        await ffmpeg.exec(['-i', 'input', '-t', '3', '-vf', 'fps=10,scale=320:-1:flags=lanczos', 'out.gif']);
         const data = await ffmpeg.readFile('out.gif');
         const blob = new Blob([data.buffer], { type: 'image/gif' });
         const url = URL.createObjectURL(blob);
@@ -395,10 +372,8 @@
       }
     });
 
-    // Preview controls
     document.getElementById('ve-play').addEventListener('click', () => {
-      if (videoPreview.paused) videoPreview.play();
-      else videoPreview.pause();
+      if (videoPreview.paused) videoPreview.play(); else videoPreview.pause();
     });
     videoPreview.addEventListener('timeupdate', () => {
       const t = videoPreview.currentTime || 0;
@@ -409,35 +384,20 @@
         return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
       };
       document.getElementById('ve-time').textContent = `${fmt(t)} / ${fmt(d)}`;
-      // Move playhead roughly
       const head = document.getElementById('ve-playhead');
-      if (d > 0) {
-        const pct = t / d;
-        head.style.left = (60 + pct * 180) + 'px';
-      }
+      if (d > 0) head.style.left = (60 + (t / d) * 180) + 'px';
     });
-    document.getElementById('prop-volume').addEventListener('input', e => {
-      videoPreview.volume = parseFloat(e.target.value);
-    });
-    document.getElementById('prop-speed').addEventListener('input', e => {
-      videoPreview.playbackRate = parseFloat(e.target.value);
-    });
+    document.getElementById('prop-volume').addEventListener('input', e => { videoPreview.volume = parseFloat(e.target.value); });
+    document.getElementById('prop-speed').addEventListener('input', e => { videoPreview.playbackRate = parseFloat(e.target.value); });
 
-    // —— ROM ——
     const romList = document.getElementById('rom-list');
     let roms = [];
     function renderRoms() {
       romList.innerHTML = roms.map((r, i) => `
-        <li>
-          <div><strong>${r.name}</strong><br><span>${(r.size / 1024).toFixed(1)} KB</span></div>
-          <button class="secondary" data-i="${i}" style="padding:0.3rem 0.6rem;font-size:0.75rem">Remove</button>
-        </li>
-      `).join('') || '<li style="color:var(--muted)">No ROMs yet</li>';
+        <li><div><strong>${r.name}</strong><br><span>${(r.size / 1024).toFixed(1)} KB</span></div>
+        <button class="secondary" data-i="${i}" style="padding:0.3rem 0.6rem;font-size:0.75rem">Remove</button></li>`).join('') || '<li style="color:var(--muted)">No ROMs yet</li>';
       romList.querySelectorAll('button').forEach(btn => {
-        btn.addEventListener('click', () => {
-          roms.splice(+btn.dataset.i, 1);
-          renderRoms();
-        });
+        btn.addEventListener('click', () => { roms.splice(+btn.dataset.i, 1); renderRoms(); });
       });
     }
     setupDropzone('rom-drop', 'rom-input', files => {
@@ -447,7 +407,6 @@
     document.getElementById('btn-rom-clear').addEventListener('click', () => { roms = []; renderRoms(); });
     renderRoms();
 
-    // —— File ——
     let currentFileName = 'edited.txt';
     setupDropzone('file-drop', 'file-input', files => {
       const f = files[0];
@@ -462,8 +421,7 @@
       reader.readAsText(f);
     });
     document.getElementById('btn-file-save').addEventListener('click', () => {
-      const text = document.getElementById('file-content').value;
-      const blob = new Blob([text], { type: 'text/plain' });
+      const blob = new Blob([document.getElementById('file-content').value], { type: 'text/plain' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
       a.download = currentFileName;
@@ -476,7 +434,6 @@
       document.getElementById('btn-file-clear').disabled = true;
     });
 
-    // —— Music ——
     let musicFile = null;
     const musicPreview = document.getElementById('music-preview');
     const musicStatus = document.getElementById('music-status');
@@ -500,7 +457,6 @@
       document.getElementById('btn-music-clear').disabled = true;
     });
 
-    // —— Rust module ——
     const RUST_TEMPLATE = `fn main() {
     println!("Hello from Universal Editor!");
     let numbers = vec![1, 2, 3, 4, 5];
@@ -519,17 +475,14 @@ mod tests {
     const rustCode = document.getElementById('rust-code');
     const rustOutput = document.getElementById('rust-output');
     const rustStatus = document.getElementById('rust-status');
-
     document.getElementById('btn-rust-template').addEventListener('click', () => {
       rustCode.value = RUST_TEMPLATE;
-      rustOutput.value = 'Template loaded.\n\nThis is a browser-side Rust editor module.\nNo remote compilation — use rustc or cargo locally after downloading.';
+      rustOutput.value = 'Template loaded.\n\nBrowser-side Rust module. Compile with rustc/cargo after download.';
       rustStatus.textContent = 'Template loaded';
       rustStatus.className = 'status ok';
     });
-
     document.getElementById('btn-rust-download').addEventListener('click', () => {
-      const text = rustCode.value || '// empty';
-      const blob = new Blob([text], { type: 'text/plain' });
+      const blob = new Blob([rustCode.value || '// empty'], { type: 'text/plain' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
       a.download = 'main.rs';
@@ -537,17 +490,14 @@ mod tests {
       rustStatus.textContent = 'Downloaded main.rs';
       rustStatus.className = 'status ok';
     });
-
     document.getElementById('btn-rust-clear').addEventListener('click', () => {
       rustCode.value = '';
       rustOutput.value = '';
       rustStatus.textContent = 'Cleared';
       rustStatus.className = 'status';
     });
-
-    // Default template on first open of rust tab
     rustCode.value = RUST_TEMPLATE;
-    rustOutput.value = 'Rust language module ready.\nEdit the code on the left and download as main.rs.\n(Compile with rustc / cargo on your machine.)';
+    rustOutput.value = 'Rust language module ready.\nEdit on the left and download as main.rs.';
   </script>
 </body>
 </html>
