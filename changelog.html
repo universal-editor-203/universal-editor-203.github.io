@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Changelog — Universal Editor</title>
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    main {
+      flex: 1;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+      width: 100%;
+    }
+    h1 { font-size: 1.8rem; margin-bottom: 1.75rem; }
+    h1 span { color: var(--orange); }
+    .release {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .release-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.85rem;
+    }
+    .version { font-size: 1.25rem; font-weight: 700; color: var(--orange); }
+    .date { color: var(--muted); font-size: 0.9rem; }
+    .release ul { padding-left: 1.25rem; color: var(--muted); }
+    .release li { margin-bottom: 0.35rem; }
+    .release li strong { color: var(--text); }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="brand" href="index.html">
+      <svg class="logo-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="64" height="64" rx="14" fill="#141414"/>
+        <rect x="4" y="4" width="56" height="56" rx="11" stroke="#ff6b00" stroke-width="3"/>
+        <path d="M18 42V22h8.5c5.2 0 8.5 2.8 8.5 7.2 0 3.1-1.6 5.4-4.3 6.5L38 42h-7.2l-5.8-6.2H25V42H18zm7-13.5h1.6c2.1 0 3.4-1.1 3.4-2.8s-1.3-2.7-3.4-2.7H25v5.5z" fill="#ff6b00"/>
+        <circle cx="46" cy="20" r="5" fill="#ff6b00"/>
+      </svg>
+      <div class="logo-text">Universal <span>Editor</span></div>
+    </a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="editor.html">Editor</a>
+      <a href="changelog.html" class="active">Changelog</a>
+      <a href="https://github.com/universal-editor-203/universal-editor-203.github.io" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Changelog</h1>
+
+    <article class="release">
+      <div class="release-header">
+        <span class="version">v1.1.5</span>
+        <span class="date">August 27, 2026</span>
+      </div>
+      <ul>
+        <li><strong>New favicon.svg</strong> — renewed black &amp; orange mark</li>
+        <li><strong>Astro scaffold</strong> under <code>/astro</code> (aligned structure)</li>
+        <li><strong>Next.js companion</strong> repo: universal-editor-next</li>
+        <li><strong>Org profile README</strong> with infinity-star decorations + Adobe disclaimer</li>
+        <li>Richer landing page (glow, badges, dual CTAs, disclaimer)</li>
+        <li>Decorated project README</li>
+      </ul>
+    </article>
+
+    <article class="release">
+      <div class="release-header">
+        <span class="version">v1.1.0</span>
+        <span class="date">August 27, 2026</span>
+      </div>
+      <ul>
+        <li><strong>Video Editor redesign</strong> — Filmora-style media / preview / properties / timeline</li>
+        <li><strong>Rust language module</strong></li>
+        <li><strong>Shared styles.css</strong></li>
+      </ul>
+    </article>
+
+    <article class="release">
+      <div class="release-header">
+        <span class="version">v1.0.0</span>
+        <span class="date">August 26, 2026</span>
+      </div>
+      <ul>
+        <li><strong>Initial public release</strong></li>
+        <li>Video · ROM · File · Music modules</li>
+        <li>Black &amp; orange theme</li>
+      </ul>
+    </article>
+  </main>
+
+  <footer>
+    Universal Editor · <a href="index.html">Home</a> · v1.1.5
+  </footer>
+</body>
+</html>
