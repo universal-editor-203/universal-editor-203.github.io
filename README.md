@@ -1,14 +1,6 @@
 <div align="center">
 
-# ✨ ∞ ⋆ Universal Editor ⋆ ∞ ✨
-
-```text
-        ✦ ˚ · . ⋆ ˚ · . ✦
-     ∞ ─────────────── ∞
-   ⋆  UNIVERSAL EDITOR  ⋆
-     ∞ ─────────────── ∞
-        ✦ ˚ · . ⋆ ˚ · . ✦
-```
+# Universal Editor
 
 ### 🦊 A tool by [FoxPhantom203](https://github.com/FoxPhantom203)
 
@@ -19,12 +11,6 @@
 [![License](https://img.shields.io/badge/MIT-222?style=for-the-badge)](./LICENSE)
 
 </div>
-
-```text
-★彡 ───────────────────────────────────────── 彡★
-     ∞ ⋆ ∞ ⋆ ∞ ⋆  INFINITY  ⋆ ∞ ⋆ ∞ ⋆ ∞
-★彡 ───────────────────────────────────────── 彡★
-```
 
 ## Features
 
