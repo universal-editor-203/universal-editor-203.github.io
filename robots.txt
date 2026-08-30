@@ -1,0 +1,17 @@
+# Universal Editor — robots.txt
+# Allow search engines and the Internet Archive (Wayback Machine) to crawl all public pages.
+
+User-agent: *
+Allow: /
+
+# Internet Archive / Wayback Machine
+User-agent: archive.org_bot
+Allow: /
+
+User-agent: ia_archiver
+Allow: /
+
+User-agent: ArchiveBot
+Allow: /
+
+Sitemap: https://universal-editor-203.github.io/sitemap.xml
