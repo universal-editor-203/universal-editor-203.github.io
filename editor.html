@@ -3,15 +3,121 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Editor — Universal Editor</title>
+  <title>Editor — Foxor Editor</title>
   <meta name="theme-color" content="#0a0a0a" />
-  <meta name="description" content="Universal Editor by FoxPhantom203. Not affiliated with Adobe." />
+  <meta name="description" content="Foxor Editor by FoxPhantom203. Browser-native video, ROM, file, music & Rust editor." />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="styles.css" />
   <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
   <script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
+  <style>
+    /* Fullscreen video editor mode */
+    body.fullscreen-mode header,
+    body.fullscreen-mode .tabs,
+    body.fullscreen-mode footer {
+      display: none;
+    }
+    body.fullscreen-mode .workspace {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100vh;
+    }
+    /* Notification system */
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--surface-2);
+      border: 2px solid var(--orange);
+      border-radius: 12px;
+      padding: 1.2rem 1.5rem;
+      max-width: 380px;
+      box-shadow: 0 8px 32px rgba(255, 107, 0, 0.25);
+      z-index: 10000;
+      animation: slideIn 0.3s ease-out;
+    }
+    @keyframes slideIn {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    .notification-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.4rem;
+      cursor: pointer;
+      padding: 0;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .notification-close:hover {
+      background: var(--surface-3);
+      color: var(--orange);
+    }
+    .notification-content {
+      padding-right: 20px;
+    }
+    .notification-title {
+      font-weight: 700;
+      color: var(--orange);
+      margin-bottom: 0.4rem;
+      font-size: 1rem;
+    }
+    .notification-text {
+      color: var(--text);
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+    /* Fullscreen button */
+    .btn-fullscreen {
+      margin-left: auto !important;
+    }
+    /* Language selector */
+    .lang-selector {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-left: 1rem;
+    }
+    .lang-selector select {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.35rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
+  <!-- Rebranding Notification -->
+  <div id="rebranding-notification" class="notification" style="display: none;">
+    <button class="notification-close" onclick="closeNotification()">✕</button>
+    <div class="notification-content">
+      <div class="notification-title" data-lang-key="notify_title">🎉 Welcome to Foxor Editor!</div>
+      <div class="notification-text" data-lang-key="notify_text">Universal Editor has been rebranded to Foxor Editor. Same power, new identity!</div>
+    </div>
+  </div>
+
   <header>
     <a class="brand" href="index.html">
       <svg class="logo-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -22,7 +128,7 @@
         <rect x="12" y="40" width="16" height="6" rx="3" fill="#ff6b00" opacity="0.5"/>
         <path d="M44 18 L56 32 L44 46 Z" fill="#ff6b00"/>
       </svg>
-      <div class="logo-text">Universal <span>Editor</span></div>
+      <div class="logo-text">Foxor <span>Editor</span></div>
     </a>
     <nav>
       <a href="index.html">Home</a>
@@ -30,14 +136,25 @@
       <a href="changelog.html">Changelog</a>
       <a href="https://github.com/universal-editor-203/universal-editor-203.github.io" target="_blank" rel="noopener">GitHub</a>
     </nav>
+    <div class="lang-selector">
+      <label for="lang-select" style="color: var(--muted); font-size: 0.85rem;">Lang:</label>
+      <select id="lang-select" onchange="changeLanguage(this.value)">
+        <option value="en">English</option>
+        <option value="es">Español</option>
+        <option value="fr">Français</option>
+        <option value="de">Deutsch</option>
+        <option value="ja">日本語</option>
+        <option value="zh">中文</option>
+      </select>
+    </div>
   </header>
 
   <div class="tabs">
-    <button class="tab active" data-tab="video">Video</button>
-    <button class="tab" data-tab="rom">ROM</button>
-    <button class="tab" data-tab="file">File</button>
-    <button class="tab" data-tab="music">Music</button>
-    <button class="tab" data-tab="rust">Rust</button>
+    <button class="tab active" data-tab="video" data-lang-key="tab_video">Video</button>
+    <button class="tab" data-tab="rom" data-lang-key="tab_rom">ROM</button>
+    <button class="tab" data-tab="file" data-lang-key="tab_file">File</button>
+    <button class="tab" data-tab="music" data-lang-key="tab_music">Music</button>
+    <button class="tab" data-tab="rust" data-lang-key="tab_rust">Rust</button>
   </div>
 
   <div class="workspace">
@@ -45,29 +162,32 @@
       <div class="ve">
         <div class="ve-toolbar">
           <div class="group">
-            <button id="btn-load-ffmpeg">Load FFmpeg</button>
-            <button id="btn-import-video" class="secondary">Import</button>
+            <button id="btn-load-ffmpeg" data-lang-key="btn_load_ffmpeg">Load FFmpeg</button>
+            <button id="btn-import-video" class="secondary" data-lang-key="btn_import">Import</button>
           </div>
           <div class="group">
-            <span class="tool-label">Edit</span>
-            <button id="btn-video-trim" disabled>Trim 5s</button>
-            <button id="btn-video-to-gif" disabled>→ GIF</button>
-            <button id="btn-video-info" disabled class="secondary">Info</button>
+            <span class="tool-label" data-lang-key="label_edit">Edit</span>
+            <button id="btn-video-trim" disabled data-lang-key="btn_trim">Trim 5s</button>
+            <button id="btn-video-to-gif" disabled data-lang-key="btn_to_gif">→ GIF</button>
+            <button id="btn-video-info" disabled class="secondary" data-lang-key="btn_info">Info</button>
           </div>
           <div class="group">
-            <button id="btn-video-clear" disabled class="secondary">Clear</button>
+            <button id="btn-video-clear" disabled class="secondary" data-lang-key="btn_clear">Clear</button>
+          </div>
+          <div class="group">
+            <button id="btn-fullscreen" class="secondary btn-fullscreen" data-lang-key="btn_fullscreen">Fullscreen</button>
           </div>
           <div class="group" style="margin-left:auto">
-            <span class="status" id="video-status">Load FFmpeg to start</span>
+            <span class="status" id="video-status" data-lang-key="status_load_ffmpeg">Load FFmpeg to start</span>
           </div>
         </div>
 
         <div class="ve-main">
           <aside class="ve-sidebar">
-            <h3>Media</h3>
+            <h3 data-lang-key="label_media">Media</h3>
             <div class="dropzone" id="video-drop" style="padding:1rem; margin-bottom:0.75rem; font-size:0.85rem;">
-              <strong>Drop video</strong>
-              <p style="margin-top:0.25rem">or click</p>
+              <strong data-lang-key="drop_video">Drop video</strong>
+              <p style="margin-top:0.25rem" data-lang-key="or_click">or click</p>
               <input type="file" id="video-input" accept="video/*" />
             </div>
             <div id="ve-media-list"></div>
@@ -78,32 +198,32 @@
               <video id="video-preview" controls></video>
             </div>
             <div class="ve-preview-controls">
-              <button id="ve-play" class="secondary">Play</button>
+              <button id="ve-play" class="secondary" data-lang-key="btn_play">Play</button>
               <span class="ve-time" id="ve-time">00:00 / 00:00</span>
               <div id="video-download"></div>
             </div>
           </div>
 
           <aside class="ve-props">
-            <h3>Properties</h3>
+            <h3 data-lang-key="label_properties">Properties</h3>
             <div class="ve-prop-row">
-              <label>Speed</label>
+              <label data-lang-key="label_speed">Speed</label>
               <input type="range" id="prop-speed" min="0.25" max="2" step="0.25" value="1" />
             </div>
             <div class="ve-prop-row">
-              <label>Volume</label>
+              <label data-lang-key="label_volume">Volume</label>
               <input type="range" id="prop-volume" min="0" max="1" step="0.05" value="1" />
             </div>
             <div class="ve-prop-row">
-              <label>Trim start (s)</label>
+              <label data-lang-key="label_trim_start">Trim start (s)</label>
               <input type="number" id="prop-trim-start" min="0" value="0" step="0.1" />
             </div>
             <div class="ve-prop-row">
-              <label>Duration (s)</label>
+              <label data-lang-key="label_duration">Duration (s)</label>
               <input type="number" id="prop-duration" min="0.1" value="5" step="0.1" />
             </div>
             <div class="ve-prop-row">
-              <label>Export</label>
+              <label data-lang-key="label_export">Export</label>
               <select id="prop-format">
                 <option value="mp4">MP4</option>
                 <option value="gif">GIF</option>
@@ -132,15 +252,15 @@
 
     <section id="panel-rom" class="panel">
       <div class="simple-workspace">
-        <h2>ROM Editor</h2>
-        <p class="sub">Add, inspect and organize game ROMs. Files stay in your browser.</p>
+        <h2 data-lang-key="title_rom">ROM Editor</h2>
+        <p class="sub" data-lang-key="desc_rom">Add, inspect and organize game ROMs. Files stay in your browser.</p>
         <div class="dropzone" id="rom-drop">
-          <strong>Drop ROM files here</strong> or click to choose
+          <strong data-lang-key="drop_rom">Drop ROM files here</strong> <span data-lang-key="or_click">or click</span>
           <p>.nes, .sfc, .gba, .n64, .iso, .bin…</p>
           <input type="file" id="rom-input" accept=".nes,.sfc,.smc,.gba,.gbc,.gb,.n64,.z64,.v64,.iso,.bin,.cue,.chd,.nds,.3ds" multiple />
         </div>
         <div class="controls">
-          <button id="btn-rom-clear" class="secondary">Clear list</button>
+          <button id="btn-rom-clear" class="secondary" data-lang-key="btn_clear_list">Clear list</button>
         </div>
         <ul class="rom-list" id="rom-list"></ul>
       </div>
@@ -148,16 +268,16 @@
 
     <section id="panel-file" class="panel">
       <div class="simple-workspace">
-        <h2>File Editor</h2>
-        <p class="sub">Open any text file, edit, and download the result.</p>
+        <h2 data-lang-key="title_file">File Editor</h2>
+        <p class="sub" data-lang-key="desc_file">Open any text file, edit, and download the result.</p>
         <div class="dropzone" id="file-drop">
-          <strong>Drop a file here</strong> or click to choose
-          <p>Text, code, configs, logs…</p>
+          <strong data-lang-key="drop_file">Drop a file here</strong> <span data-lang-key="or_click">or click</span>
+          <p data-lang-key="file_types">Text, code, configs, logs…</p>
           <input type="file" id="file-input" />
         </div>
         <div class="controls">
-          <button id="btn-file-save" disabled>Download edited</button>
-          <button class="secondary" id="btn-file-clear" disabled>Clear</button>
+          <button id="btn-file-save" disabled data-lang-key="btn_download">Download edited</button>
+          <button class="secondary" id="btn-file-clear" disabled data-lang-key="btn_clear">Clear</button>
         </div>
         <div class="status" id="file-status"></div>
         <textarea id="file-content" placeholder="File content will appear here…" spellcheck="false"></textarea>
@@ -166,16 +286,16 @@
 
     <section id="panel-music" class="panel">
       <div class="simple-workspace">
-        <h2>Music Editor</h2>
-        <p class="sub">Load audio tracks, preview, and prepare for further processing.</p>
+        <h2 data-lang-key="title_music">Music Editor</h2>
+        <p class="sub" data-lang-key="desc_music">Load audio tracks, preview, and prepare for further processing.</p>
         <div class="dropzone" id="music-drop">
-          <strong>Drop audio here</strong> or click to choose
+          <strong data-lang-key="drop_audio">Drop audio here</strong> <span data-lang-key="or_click">or click</span>
           <p>MP3, WAV, OGG, FLAC, M4A…</p>
           <input type="file" id="music-input" accept="audio/*" />
         </div>
         <div class="controls">
-          <button id="btn-music-info" disabled>Show Info</button>
-          <button class="secondary" id="btn-music-clear" disabled>Clear</button>
+          <button id="btn-music-info" disabled data-lang-key="btn_show_info">Show Info</button>
+          <button class="secondary" id="btn-music-clear" disabled data-lang-key="btn_clear">Clear</button>
         </div>
         <div class="status" id="music-status"></div>
         <audio id="music-preview" controls></audio>
@@ -185,10 +305,10 @@
     <section id="panel-rust" class="panel">
       <div class="rust-editor">
         <div class="rust-toolbar">
-          <button id="btn-rust-template">Load template</button>
-          <button id="btn-rust-download" class="secondary">Download .rs</button>
-          <button id="btn-rust-clear" class="secondary">Clear</button>
-          <span class="status" id="rust-status" style="margin-left:0.5rem">Rust module — edit &amp; download</span>
+          <button id="btn-rust-template" data-lang-key="btn_load_template">Load template</button>
+          <button id="btn-rust-download" class="secondary" data-lang-key="btn_download_rs">Download .rs</button>
+          <button id="btn-rust-clear" class="secondary" data-lang-key="btn_clear">Clear</button>
+          <span class="status" id="rust-status" style="margin-left:0.5rem" data-lang-key="status_rust">Rust module — edit & download</span>
         </div>
         <div class="rust-body">
           <div class="rust-code-wrap">
@@ -196,7 +316,7 @@
             <textarea id="rust-code" spellcheck="false" placeholder="// Write Rust here…"></textarea>
           </div>
           <div class="rust-output-wrap">
-            <div class="rust-label">Notes / Output</div>
+            <div class="rust-label" data-lang-key="label_notes">Notes / Output</div>
             <textarea id="rust-output" readonly placeholder="Tips and notes appear here. (No remote compile — browser only)"></textarea>
           </div>
         </div>
@@ -205,11 +325,356 @@
   </div>
 
   <footer>
-    Universal Editor · v1.1.5 · FFmpeg.wasm ·
+    Foxor Editor · v1.1.8 · FFmpeg.wasm ·
     <a href="changelog.html">Changelog</a>
   </footer>
 
   <script>
+    // Multilingual support
+    const translations = {
+      en: {
+        notify_title: '🎉 Welcome to Foxor Editor!',
+        notify_text: 'Universal Editor has been rebranded to Foxor Editor. Same power, new identity!',
+        tab_video: 'Video',
+        tab_rom: 'ROM',
+        tab_file: 'File',
+        tab_music: 'Music',
+        tab_rust: 'Rust',
+        btn_load_ffmpeg: 'Load FFmpeg',
+        btn_import: 'Import',
+        label_edit: 'Edit',
+        btn_trim: 'Trim 5s',
+        btn_to_gif: '→ GIF',
+        btn_info: 'Info',
+        btn_clear: 'Clear',
+        btn_fullscreen: 'Fullscreen',
+        status_load_ffmpeg: 'Load FFmpeg to start',
+        label_media: 'Media',
+        drop_video: 'Drop video',
+        or_click: 'or click',
+        btn_play: 'Play',
+        label_properties: 'Properties',
+        label_speed: 'Speed',
+        label_volume: 'Volume',
+        label_trim_start: 'Trim start (s)',
+        label_duration: 'Duration (s)',
+        label_export: 'Export',
+        title_rom: 'ROM Editor',
+        desc_rom: 'Add, inspect and organize game ROMs. Files stay in your browser.',
+        drop_rom: 'Drop ROM files here',
+        btn_clear_list: 'Clear list',
+        title_file: 'File Editor',
+        desc_file: 'Open any text file, edit, and download the result.',
+        drop_file: 'Drop a file here',
+        file_types: 'Text, code, configs, logs…',
+        btn_download: 'Download edited',
+        title_music: 'Music Editor',
+        desc_music: 'Load audio tracks, preview, and prepare for further processing.',
+        drop_audio: 'Drop audio here',
+        btn_show_info: 'Show Info',
+        btn_load_template: 'Load template',
+        btn_download_rs: 'Download .rs',
+        status_rust: 'Rust module — edit & download',
+        label_notes: 'Notes / Output'
+      },
+      es: {
+        notify_title: '🎉 ¡Bienvenido a Foxor Editor!',
+        notify_text: 'Universal Editor ha sido rebranded a Foxor Editor. ¡Mismo poder, nueva identidad!',
+        tab_video: 'Video',
+        tab_rom: 'ROM',
+        tab_file: 'Archivo',
+        tab_music: 'Música',
+        tab_rust: 'Rust',
+        btn_load_ffmpeg: 'Cargar FFmpeg',
+        btn_import: 'Importar',
+        label_edit: 'Editar',
+        btn_trim: 'Recortar 5s',
+        btn_to_gif: '→ GIF',
+        btn_info: 'Información',
+        btn_clear: 'Limpiar',
+        btn_fullscreen: 'Pantalla Completa',
+        status_load_ffmpeg: 'Carga FFmpeg para empezar',
+        label_media: 'Medios',
+        drop_video: 'Suelta el video',
+        or_click: 'o haz clic',
+        btn_play: 'Reproducir',
+        label_properties: 'Propiedades',
+        label_speed: 'Velocidad',
+        label_volume: 'Volumen',
+        label_trim_start: 'Inicio de recorte (s)',
+        label_duration: 'Duración (s)',
+        label_export: 'Exportar',
+        title_rom: 'Editor de ROM',
+        desc_rom: 'Agrega, inspecciona y organiza ROMs de juegos. Los archivos permanecen en tu navegador.',
+        drop_rom: 'Suelta archivos ROM aquí',
+        btn_clear_list: 'Limpiar lista',
+        title_file: 'Editor de Archivos',
+        desc_file: 'Abre cualquier archivo de texto, edítalo y descarga el resultado.',
+        drop_file: 'Suelta un archivo aquí',
+        file_types: 'Texto, código, configuraciones, registros…',
+        btn_download: 'Descargar editado',
+        title_music: 'Editor de Música',
+        desc_music: 'Carga pistas de audio, vista previa y prepárate para procesamiento adicional.',
+        drop_audio: 'Suelta audio aquí',
+        btn_show_info: 'Mostrar Información',
+        btn_load_template: 'Cargar plantilla',
+        btn_download_rs: 'Descargar .rs',
+        status_rust: 'Módulo Rust — edita y descarga',
+        label_notes: 'Notas / Salida'
+      },
+      fr: {
+        notify_title: '🎉 Bienvenue dans Foxor Editor!',
+        notify_text: 'Universal Editor a été rebrandé en Foxor Editor. Même puissance, nouvelle identité!',
+        tab_video: 'Vidéo',
+        tab_rom: 'ROM',
+        tab_file: 'Fichier',
+        tab_music: 'Musique',
+        tab_rust: 'Rust',
+        btn_load_ffmpeg: 'Charger FFmpeg',
+        btn_import: 'Importer',
+        label_edit: 'Éditer',
+        btn_trim: 'Recadrer 5s',
+        btn_to_gif: '→ GIF',
+        btn_info: 'Informations',
+        btn_clear: 'Effacer',
+        btn_fullscreen: 'Plein écran',
+        status_load_ffmpeg: 'Charger FFmpeg pour commencer',
+        label_media: 'Médias',
+        drop_video: 'Déposer la vidéo',
+        or_click: 'ou cliquer',
+        btn_play: 'Lire',
+        label_properties: 'Propriétés',
+        label_speed: 'Vitesse',
+        label_volume: 'Volume',
+        label_trim_start: 'Début du recadrage (s)',
+        label_duration: 'Durée (s)',
+        label_export: 'Exporter',
+        title_rom: 'Éditeur ROM',
+        desc_rom: 'Ajoutez, inspectez et organisez les ROM de jeux. Les fichiers restent dans votre navigateur.',
+        drop_rom: 'Déposer les fichiers ROM ici',
+        btn_clear_list: 'Effacer la liste',
+        title_file: 'Éditeur de fichiers',
+        desc_file: 'Ouvrez n\'importe quel fichier texte, modifiez-le et téléchargez le résultat.',
+        drop_file: 'Déposer un fichier ici',
+        file_types: 'Texte, code, configurations, journaux…',
+        btn_download: 'Télécharger édité',
+        title_music: 'Éditeur de musique',
+        desc_music: 'Chargez des pistes audio, prévisualisez et préparez-vous pour un traitement ultérieur.',
+        drop_audio: 'Déposer l\'audio ici',
+        btn_show_info: 'Afficher les informations',
+        btn_load_template: 'Charger le modèle',
+        btn_download_rs: 'Télécharger .rs',
+        status_rust: 'Module Rust — éditer et télécharger',
+        label_notes: 'Notes / Sortie'
+      },
+      de: {
+        notify_title: '🎉 Willkommen bei Foxor Editor!',
+        notify_text: 'Universal Editor wurde in Foxor Editor umbenannt. Gleiche Kraft, neue Identität!',
+        tab_video: 'Video',
+        tab_rom: 'ROM',
+        tab_file: 'Datei',
+        tab_music: 'Musik',
+        tab_rust: 'Rust',
+        btn_load_ffmpeg: 'FFmpeg laden',
+        btn_import: 'Importieren',
+        label_edit: 'Bearbeiten',
+        btn_trim: '5s trimmen',
+        btn_to_gif: '→ GIF',
+        btn_info: 'Info',
+        btn_clear: 'Löschen',
+        btn_fullscreen: 'Vollbild',
+        status_load_ffmpeg: 'FFmpeg zum Starten laden',
+        label_media: 'Medien',
+        drop_video: 'Video ablegen',
+        or_click: 'oder klicken',
+        btn_play: 'Abspielen',
+        label_properties: 'Eigenschaften',
+        label_speed: 'Geschwindigkeit',
+        label_volume: 'Lautstärke',
+        label_trim_start: 'Trimmen starten (s)',
+        label_duration: 'Dauer (s)',
+        label_export: 'Exportieren',
+        title_rom: 'ROM-Editor',
+        desc_rom: 'Fügen Sie ROM-Spieldateien hinzu, inspizieren und organisieren Sie diese. Dateien bleiben in Ihrem Browser.',
+        drop_rom: 'ROM-Dateien hier ablegen',
+        btn_clear_list: 'Liste löschen',
+        title_file: 'Datei-Editor',
+        desc_file: 'Öffnen Sie eine beliebige Textdatei, bearbeiten Sie sie und laden Sie das Ergebnis herunter.',
+        drop_file: 'Datei hier ablegen',
+        file_types: 'Text, Code, Konfigurationen, Protokolle…',
+        btn_download: 'Bearbeitet herunterladen',
+        title_music: 'Musik-Editor',
+        desc_music: 'Laden Sie Audiospuren, sehen Sie eine Vorschau an und bereiten Sie sich auf weitere Verarbeitung vor.',
+        drop_audio: 'Audio hier ablegen',
+        btn_show_info: 'Info anzeigen',
+        btn_load_template: 'Vorlage laden',
+        btn_download_rs: '.rs herunterladen',
+        status_rust: 'Rust-Modul — bearbeiten und herunterladen',
+        label_notes: 'Notizen / Ausgabe'
+      },
+      ja: {
+        notify_title: '🎉 Foxor Editorへようこそ!',
+        notify_text: 'Universal EditorはFoxor Editorにリブランドされました。同じ力、新しいアイデンティティ!',
+        tab_video: 'ビデオ',
+        tab_rom: 'ROM',
+        tab_file: 'ファイル',
+        tab_music: '音楽',
+        tab_rust: 'Rust',
+        btn_load_ffmpeg: 'FFmpegを読み込む',
+        btn_import: 'インポート',
+        label_edit: '編集',
+        btn_trim: '5sトリミング',
+        btn_to_gif: '→ GIF',
+        btn_info: '情報',
+        btn_clear: 'クリア',
+        btn_fullscreen: 'フルスクリーン',
+        status_load_ffmpeg: 'FFmpegを読み込んで開始',
+        label_media: 'メディア',
+        drop_video: 'ビデオをドロップ',
+        or_click: 'またはクリック',
+        btn_play: '再生',
+        label_properties: 'プロパティ',
+        label_speed: 'スピード',
+        label_volume: 'ボリューム',
+        label_trim_start: 'トリミング開始 (s)',
+        label_duration: '期間 (s)',
+        label_export: 'エクスポート',
+        title_rom: 'ROMエディタ',
+        desc_rom: 'ゲームROMを追加、検査、整理します。ファイルはブラウザに留まります。',
+        drop_rom: 'ROMファイルをここにドロップ',
+        btn_clear_list: 'リストをクリア',
+        title_file: 'ファイルエディタ',
+        desc_file: 'テキストファイルを開き、編集して、結果をダウンロードします。',
+        drop_file: 'ファイルをここにドロップ',
+        file_types: 'テキスト、コード、設定、ログ…',
+        btn_download: '編集版をダウンロード',
+        title_music: '音楽エディタ',
+        desc_music: 'オーディオトラックを読み込み、プレビューして、さらなる処理に備えます。',
+        drop_audio: 'オーディオをここにドロップ',
+        btn_show_info: '情報を表示',
+        btn_load_template: 'テンプレートを読み込む',
+        btn_download_rs: '.rsをダウンロード',
+        status_rust: 'Rustモジュール — 編集してダウンロード',
+        label_notes: 'ノート / 出力'
+      },
+      zh: {
+        notify_title: '🎉 欢迎使用 Foxor Editor！',
+        notify_text: 'Universal Editor 已更名为 Foxor Editor。同样强大，全新身份！',
+        tab_video: '视频',
+        tab_rom: 'ROM',
+        tab_file: '文件',
+        tab_music: '音乐',
+        tab_rust: 'Rust',
+        btn_load_ffmpeg: '加载 FFmpeg',
+        btn_import: '导入',
+        label_edit: '编辑',
+        btn_trim: '裁剪 5 秒',
+        btn_to_gif: '→ GIF',
+        btn_info: '信息',
+        btn_clear: '清除',
+        btn_fullscreen: '全屏',
+        status_load_ffmpeg: '加载 FFmpeg 开始',
+        label_media: '媒体',
+        drop_video: '拖放视频',
+        or_click: '或点击',
+        btn_play: '播放',
+        label_properties: '属性',
+        label_speed: '速度',
+        label_volume: '音量',
+        label_trim_start: '裁剪开始 (秒)',
+        label_duration: '持续时间 (秒)',
+        label_export: '导出',
+        title_rom: 'ROM 编辑器',
+        desc_rom: '添加、检查和组织游戏 ROM。文件保留在您的浏览器中。',
+        drop_rom: '将 ROM 文件放在此处',
+        btn_clear_list: '清除列表',
+        title_file: '文件编辑器',
+        desc_file: '打开任何文本文件，编辑并下载结果。',
+        drop_file: '将文件放在此处',
+        file_types: '文本、代码、配置、日志…',
+        btn_download: '下载编辑',
+        title_music: '音乐编辑器',
+        desc_music: '加载音轨、预览并准备进行进一步处理。',
+        drop_audio: '将音频放在此处',
+        btn_show_info: '显示信息',
+        btn_load_template: '加载模板',
+        btn_download_rs: '下载 .rs',
+        status_rust: 'Rust 模块 — 编辑和下载',
+        label_notes: '笔记 / 输出'
+      }
+    };
+
+    let currentLanguage = localStorage.getItem('foxor-lang') || 'en';
+
+    function updateLanguage() {
+      const lang = translations[currentLanguage];
+      document.querySelectorAll('[data-lang-key]').forEach(el => {
+        const key = el.dataset.langKey;
+        if (lang[key]) {
+          if (el.tagName === 'TEXTAREA') {
+            el.placeholder = lang[key];
+          } else {
+            el.textContent = lang[key];
+          }
+        }
+      });
+    }
+
+    function changeLanguage(lang) {
+      currentLanguage = lang;
+      localStorage.setItem('foxor-lang', lang);
+      updateLanguage();
+    }
+
+    // Show notification with sound
+    function showNotification() {
+      const notif = document.getElementById('rebranding-notification');
+      notif.style.display = 'block';
+      
+      // Play online sound
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.frequency.value = 800;
+      oscillator.type = 'sine';
+      
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.5);
+      
+      // Auto-hide after 5 seconds
+      setTimeout(() => {
+        notif.style.display = 'none';
+      }, 5000);
+    }
+
+    function closeNotification() {
+      document.getElementById('rebranding-notification').style.display = 'none';
+    }
+
+    // Fullscreen toggle
+    document.getElementById('btn-fullscreen').addEventListener('click', () => {
+      document.body.classList.toggle('fullscreen-mode');
+      const btn = document.getElementById('btn-fullscreen');
+      btn.textContent = document.body.classList.contains('fullscreen-mode') ? 'Exit Fullscreen' : 'Fullscreen';
+    });
+
+    // Initialize language
+    updateLanguage();
+
+    // Show notification on first load
+    if (!sessionStorage.getItem('foxor-notified')) {
+      setTimeout(showNotification, 800);
+      sessionStorage.setItem('foxor-notified', 'true');
+    }
+
+    // Rest of the editor code remains the same...
     function activateTab(name) {
       const valid = ['video', 'rom', 'file', 'music', 'rust'];
       if (!valid.includes(name)) name = 'video';
@@ -458,7 +923,7 @@
     });
 
     const RUST_TEMPLATE = `fn main() {
-    println!("Hello from Universal Editor!");
+    println!("Hello from Foxor Editor!");
     let numbers = vec![1, 2, 3, 4, 5];
     let sum: i32 = numbers.iter().sum();
     println!("Sum: {}", sum);
