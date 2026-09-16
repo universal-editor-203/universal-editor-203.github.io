@@ -1,6 +1,6 @@
-# Contributing to Universal Editor
+# Contributing to Foxor Editor
 
-Thank you for your interest in contributing to **Universal Editor**! This document outlines how to help improve the project.
+Thank you for your interest in contributing to **Foxor Editor**! This document outlines how to help improve the project.
 
 ## Code of Conduct
 
@@ -169,4 +169,4 @@ Improves video editing workflow for precision cuts.
 
 By contributing, you agree that your contributions will be licensed under the [MIT License](./LICENSE).
 
-**Thank you for making Universal Editor better! 🦊🎨**
+**Thank you for making Foxor Editor better! 🦊🎨**

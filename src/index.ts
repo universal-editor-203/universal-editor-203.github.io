@@ -1,4 +1,4 @@
-/** Foxor Universal Editor — TypeScript entry (v1.1.7) */
+/** Foxor Editor — TypeScript entry (v1.1.9) */
 export { MODULES, FLAVORS, VERSION } from "./types";
 export type { ModuleId, ModuleMeta, FlavorId, FlavorMeta } from "./types";
 export { ModuleCard } from "./components/ModuleCard";

@@ -1,6 +1,6 @@
-# Universal Editor — Astro scaffold
+# Foxor Editor — Astro scaffold
 
-Aligned Astro project structure for Universal Editor.
+Aligned Astro project structure for Foxor Editor.
 
 ```bash
 cd astro

@@ -5,7 +5,7 @@ export interface ModuleCardProps {
   hrefBase?: string;
 }
 
-/** React card for a Universal Editor module (TypeScript). */
+/** React card for a Foxor Editor module (TypeScript). */
 export function ModuleCard({ module, hrefBase = "editor.html" }: ModuleCardProps) {
   const href = `${hrefBase}${module.hash}`;
   return (

@@ -1,6 +1,6 @@
 {
-  "name": "universal-editor-astro",
-  "version": "1.1.5",
+  "name": "foxor-editor-astro",
+  "version": "1.1.9",
   "private": true,
   "type": "module",
   "scripts": {

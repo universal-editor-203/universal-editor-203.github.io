@@ -1,13 +1,13 @@
 <div align="center">
 
-# Foxor Universal Editor
+# Foxor Editor
 
 ### 🦊 A tool by [FoxPhantom203](https://github.com/FoxPhantom203)
 
 **Black & Orange** · Browser-native · All-in-one
 
-[![Live](https://img.shields.io/badge/Live-universal--editor--203.github.io-ff6b00?style=for-the-badge)](https://universal-editor-203.github.io/)
-[![Version](https://img.shields.io/badge/v1.1.7-black?style=for-the-badge)](https://github.com/universal-editor-203/universal-editor-203.github.io)
+[![Live](https://img.shields.io/badge/Live-foxor--editor-ff6b00?style=for-the-badge)](https://universal-editor-203.github.io/)
+[![Version](https://img.shields.io/badge/v1.1.9-black?style=for-the-badge)](https://github.com/universal-editor-203/universal-editor-203.github.io)
 [![License](https://img.shields.io/badge/MIT-222?style=for-the-badge)](./LICENSE)
 
 </div>
@@ -39,11 +39,11 @@ Also:
 
 ## ⚠️ Disclaimer
 
-> Tool by **FoxPhantom203**. **Not affiliated with Adobe** or Adobe Universal Editor.
+> Tool by **FoxPhantom203**. **Not affiliated with Adobe** .
 
 ## Version
 
-**1.1.7** — Foxor favicon · TypeScript/React `src/` · Next flavor 02
+**1.1.9** — Complete Foxor Editor rebrand · Bug fixes · Enhanced multilingual support
 
 ## License
 
