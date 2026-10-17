@@ -1,4 +1,4 @@
-/** Shared types for Foxor Editor (v1.1.9) */
+/** Shared types for Foxor Editor (v1.2.0) */
 
 export type ModuleId = "video" | "rom" | "file" | "music" | "rust";
 
@@ -66,4 +66,4 @@ export const FLAVORS: readonly FlavorMeta[] = [
   },
 ] as const;
 
-export const VERSION = "1.1.9" as const;
+export const VERSION = "1.2.0" as const;
