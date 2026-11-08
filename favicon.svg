@@ -1,11 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <rect width="64" height="64" rx="14" fill="#0a0a0a"/>
-  <rect x="4" y="4" width="56" height="56" rx="11" stroke="#ff6b00" stroke-width="3"/>
-  <!-- Foxor face: ears + snout arc -->
-  <path d="M16 22 L24 12 L28 22 Z" fill="#ff6b00"/>
-  <path d="M36 22 L40 12 L48 22 Z" fill="#ff6b00"/>
-  <circle cx="26" cy="30" r="3.2" fill="#ff6b00"/>
-  <circle cx="38" cy="30" r="3.2" fill="#ff6b00"/>
-  <path d="M22 40c3 7 17 7 20 0" stroke="#ff6b00" stroke-width="3" stroke-linecap="round" fill="none"/>
-  <circle cx="32" cy="36" r="2" fill="#ff6b00"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#141414"/>
+  <rect x="4" y="4" width="56" height="56" rx="11" stroke="#ffbf00" stroke-width="3"/>
+  <path d="M16 22 L24 12 L28 22 Z" fill="#ffbf00"/>
+  <path d="M36 22 L40 12 L48 22 Z" fill="#ffbf00"/>
+  <circle cx="26" cy="30" r="3.2" fill="#ffbf00"/>
+  <circle cx="38" cy="30" r="3.2" fill="#ffbf00"/>
+  <path d="M22 40c3 7 17 7 20 0" stroke="#ffbf00" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <circle cx="32" cy="36" r="2" fill="#ffbf00"/>
 </svg>

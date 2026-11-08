@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Foxor Editor — by FoxPhantom203</title>
-  <meta name="description" content="Foxor Editor — browser-native video, ROMs, files, music & Rust. Flavors: Blitz.js + Next.js. By FoxPhantom203. Not affiliated with Adobe." />
+  <title>Amber Universal Editor - by FoxPhantom203</title>
+  <meta name="description" content="Amber Universal Editor - browser-native video, ROMs, files, music, Rust, and more. Flavors: Blitz.js + Next.js. By FoxPhantom203. Not affiliated with Adobe." />
   <meta name="theme-color" content="#0a0a0a" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="styles.css" />
@@ -14,30 +14,30 @@
     .hero::before {
       content: ""; position: absolute; width: 420px; height: 420px; left: 50%; top: -80px;
       transform: translateX(-50%);
-      background: radial-gradient(circle, rgba(255,107,0,0.16) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(255,191,0,0.16) 0%, transparent 70%);
       pointer-events: none; z-index: 0;
     }
     .hero > * { position: relative; z-index: 1; }
-    .hero-logo { width: 100px; height: 100px; margin: 0 auto 1.35rem; filter: drop-shadow(0 0 22px var(--orange-glow)); }
+    .hero-logo { width: 100px; height: 100px; margin: 0 auto 1.35rem; filter: drop-shadow(0 0 22px var(--amber-glow)); }
     .badge-row { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1rem; }
     .badge {
       font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
-      color: var(--orange); background: rgba(255,107,0,0.12); border: 1px solid rgba(255,107,0,0.35);
+      color: var(--amber); background: rgba(255,191,0,0.12); border: 1px solid rgba(255,191,0,0.35);
       padding: 0.28rem 0.7rem; border-radius: 999px;
     }
     .badge.muted { color: var(--muted); background: var(--surface-2); border-color: var(--border); }
     .hero h1 { font-size: clamp(2.3rem, 5.5vw, 3.5rem); margin-bottom: 0.85rem; line-height: 1.1; font-weight: 800; letter-spacing: -0.03em; }
-    .hero h1 span { color: var(--orange); }
+    .hero h1 span { color: var(--amber); }
     .hero p { font-size: 1.08rem; color: var(--muted); max-width: 540px; margin: 0 auto 1.85rem; }
     .hero-actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
     .btn {
-      display: inline-block; background: var(--orange); color: #000; font-weight: 700;
+      display: inline-block; background: var(--amber); color: #000; font-weight: 700;
       padding: 0.85rem 1.85rem; border-radius: 8px; text-decoration: none;
       transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
     }
-    .btn:hover { background: var(--orange-dim); transform: translateY(-2px); box-shadow: 0 8px 24px var(--orange-glow); }
+    .btn:hover { background: var(--amber-dim); transform: translateY(-2px); box-shadow: 0 8px 24px var(--amber-glow); }
     .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
-    .btn-ghost:hover { border-color: var(--orange); color: var(--orange); box-shadow: none; background: var(--surface-2); }
+    .btn-ghost:hover { border-color: var(--amber); color: var(--amber); box-shadow: none; background: var(--surface-2); }
     .disclaimer {
       margin-top: 2.5rem; padding: 1rem 1.25rem; background: var(--surface); border: 1px solid var(--border);
       border-radius: var(--radius-md); font-size: 0.85rem; color: var(--muted); text-align: center;
@@ -53,14 +53,14 @@
       padding: 1.35rem; text-decoration: none; color: inherit; display: block;
       transition: border-color 0.15s, transform 0.15s;
     }
-    .flavor-card:hover { border-color: var(--orange); transform: translateY(-2px); }
+    .flavor-card:hover { border-color: var(--amber); transform: translateY(-2px); }
     .flavor-card.soon { opacity: 0.72; pointer-events: none; }
-    .flavor-card h3 { color: var(--orange); margin-bottom: 0.35rem; font-size: 1.05rem; }
+    .flavor-card h3 { color: var(--amber); margin-bottom: 0.35rem; font-size: 1.05rem; }
     .flavor-card p { color: var(--muted); font-size: 0.9rem; margin: 0; }
     .flavor-tag {
       display: inline-block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
       margin-bottom: 0.55rem; padding: 0.15rem 0.45rem; border-radius: 999px;
-      background: rgba(255,107,0,0.12); color: var(--orange); border: 1px solid rgba(255,107,0,0.35);
+      background: rgba(255,191,0,0.12); color: var(--amber); border: 1px solid rgba(255,191,0,0.35);
     }
     .flavor-tag.muted { background: var(--surface-2); color: var(--muted); border-color: var(--border); }
   </style>
@@ -70,17 +70,18 @@
     <a class="brand" href="index.html">
       <svg class="logo-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <rect width="64" height="64" rx="14" fill="#141414"/>
-        <rect x="4" y="4" width="56" height="56" rx="11" stroke="#ff6b00" stroke-width="3"/>
-        <path d="M16 22 L24 12 L28 22 Z" fill="#ff6b00"/>
-        <path d="M36 22 L40 12 L48 22 Z" fill="#ff6b00"/>
-        <circle cx="26" cy="30" r="3.2" fill="#ff6b00"/>
-        <circle cx="38" cy="30" r="3.2" fill="#ff6b00"/>
-        <path d="M22 40c3 7 17 7 20 0" stroke="#ff6b00" stroke-width="3" stroke-linecap="round" fill="none"/>
-        <circle cx="32" cy="36" r="2" fill="#ff6b00"/>
+        <rect x="4" y="4" width="56" height="56" rx="11" stroke="#ffbf00" stroke-width="3"/>
+        <path d="M16 22 L24 12 L28 22 Z" fill="#ffbf00"/>
+        <path d="M36 22 L40 12 L48 22 Z" fill="#ffbf00"/>
+        <circle cx="26" cy="30" r="3.2" fill="#ffbf00"/>
+        <circle cx="38" cy="30" r="3.2" fill="#ffbf00"/>
+        <path d="M22 40c3 7 17 7 20 0" stroke="#ffbf00" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <circle cx="32" cy="36" r="2" fill="#ffbf00"/>
       </svg>
-      <div class="logo-text">Foxor <span>Editor</span></div>
+      <div class="logo-text">Amber <span>Universal Editor</span></div>
     </a>
     <nav>
+      <a href="index.html">Home</a>
       <a href="editor.html">Editor</a>
       <a href="changelog.html">Changelog</a>
       <a href="https://github.com/universal-editor-203/universal-editor-203.github.io" target="_blank" rel="noopener">GitHub</a>
@@ -91,20 +92,20 @@
     <section class="hero">
       <svg class="hero-logo" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect width="64" height="64" rx="14" fill="#141414"/>
-        <rect x="4" y="4" width="56" height="56" rx="11" stroke="#ff6b00" stroke-width="3"/>
-        <path d="M16 22 L24 12 L28 22 Z" fill="#ff6b00"/>
-        <path d="M36 22 L40 12 L48 22 Z" fill="#ff6b00"/>
-        <circle cx="26" cy="30" r="3.2" fill="#ff6b00"/>
-        <circle cx="38" cy="30" r="3.2" fill="#ff6b00"/>
-        <path d="M22 40c3 7 17 7 20 0" stroke="#ff6b00" stroke-width="3" stroke-linecap="round" fill="none"/>
-        <circle cx="32" cy="36" r="2" fill="#ff6b00"/>
+        <rect x="4" y="4" width="56" height="56" rx="11" stroke="#ffbf00" stroke-width="3"/>
+        <path d="M16 22 L24 12 L28 22 Z" fill="#ffbf00"/>
+        <path d="M36 22 L40 12 L48 22 Z" fill="#ffbf00"/>
+        <circle cx="26" cy="30" r="3.2" fill="#ffbf00"/>
+        <circle cx="38" cy="30" r="3.2" fill="#ffbf00"/>
+        <path d="M22 40c3 7 17 7 20 0" stroke="#ffbf00" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <circle cx="32" cy="36" r="2" fill="#ffbf00"/>
       </svg>
       <div class="badge-row">
-        <span class="badge">v1.2.0</span>
-        <span class="badge muted">Foxor · MIT</span>
+        <span class="badge">v1.2.1</span>
+        <span class="badge muted">Amber Universal Editor</span>
       </div>
       <h1>One editor.<br><span>Everything.</span></h1>
-      <p>ROMs, files, videos, music, and Rust — black &amp; orange workspace. Slow-release flavors: Blitz.js and Next.js.</p>
+      <p>ROMs, files, videos, music, and Rust - black & amber workspace. Slow-release flavors: Blitz.js and Next.js.</p>
       <div class="hero-actions">
         <a class="btn" href="editor.html">Open Editor</a>
         <a class="btn btn-ghost" href="https://github.com/universal-editor-203/universal-editor-next" target="_blank" rel="noopener">Next flavor</a>
@@ -118,6 +119,7 @@
       <a class="card" href="editor.html#file"><h3>File Editor</h3><p>Edit text and download results.</p></a>
       <a class="card" href="editor.html#music"><h3>Music Editor</h3><p>Load and preview audio tracks.</p></a>
       <a class="card" href="editor.html#rust"><h3>Rust Module</h3><p>Write, template, download .rs.</p></a>
+      <a class="card" href="editor.html#image"><h3>Image Editor</h3><p>NEW: Basic image editing and filters.</p></a>
       <a class="card" href="src/"><h3>TypeScript</h3><p>Shared types + React components under <code>src/</code>.</p></a>
     </section>
 
@@ -129,19 +131,19 @@
       </p>
       <div class="flavor-grid">
         <a class="flavor-card" href="https://github.com/universal-editor-203/universal-editor-blitz" target="_blank" rel="noopener">
-          <span class="flavor-tag">Live · 01</span>
+          <span class="flavor-tag">Live - 01</span>
           <h3>Blitz.js</h3>
-          <p>Tiny zero-build runtime — universal-editor-blitz.</p>
+          <p>Tiny zero-build runtime - universal-editor-blitz.</p>
         </a>
         <a class="flavor-card" href="https://github.com/universal-editor-203/universal-editor-next" target="_blank" rel="noopener">
-          <span class="flavor-tag">Live · 02</span>
+          <span class="flavor-tag">Live - 02</span>
           <h3>Next.js</h3>
-          <p>App Router + TypeScript — universal-editor-next.</p>
+          <p>App Router + TypeScript - universal-editor-next.</p>
         </a>
         <div class="flavor-card soon">
           <span class="flavor-tag muted">Coming soon</span>
           <h3>More Vercel types</h3>
-          <p>Additional app types later — no clutter.</p>
+          <p>Additional app types later - no clutter.</p>
         </div>
       </div>
     </section>
@@ -153,8 +155,8 @@
   </main>
 
   <footer>
-    Built by <a href="https://github.com/FoxPhantom203">FoxPhantom203</a> ·
-    <a href="https://github.com/universal-editor-203">universal-editor-203</a> · v1.2.0
+    Built by <a href="https://github.com/FoxPhantom203">FoxPhantom203</a> -
+    <a href="https://github.com/universal-editor-203">universal-editor-203</a> - v1.2.1
   </footer>
 </body>
 </html>

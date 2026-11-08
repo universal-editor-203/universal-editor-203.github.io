@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Changelog — Foxor Editor</title>
+  <title>Changelog - Amber Universal Editor</title>
   <meta name="theme-color" content="#0a0a0a" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="styles.css" />
@@ -25,7 +25,7 @@
       gap: 0.5rem;
       margin-bottom: 0.85rem;
     }
-    .version { font-size: 1.25rem; font-weight: 700; color: var(--orange); }
+    .version { font-size: 1.25rem; font-weight: 700; color: var(--amber); }
     .date { color: var(--muted); font-size: 0.9rem; }
     .release ul { padding-left: 1.25rem; color: var(--muted); }
     .release li { margin-bottom: 0.35rem; }
@@ -37,15 +37,15 @@
     <a class="brand" href="index.html">
       <svg class="logo-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <rect width="64" height="64" rx="14" fill="#141414"/>
-        <rect x="4" y="4" width="56" height="56" rx="11" stroke="#ff6b00" stroke-width="3"/>
-        <path d="M16 22 L24 12 L28 22 Z" fill="#ff6b00"/>
-        <path d="M36 22 L40 12 L48 22 Z" fill="#ff6b00"/>
-        <circle cx="26" cy="30" r="3.2" fill="#ff6b00"/>
-        <circle cx="38" cy="30" r="3.2" fill="#ff6b00"/>
-        <path d="M22 40c3 7 17 7 20 0" stroke="#ff6b00" stroke-width="3" stroke-linecap="round" fill="none"/>
-        <circle cx="32" cy="36" r="2" fill="#ff6b00"/>
+        <rect x="4" y="4" width="56" height="56" rx="11" stroke="#ffbf00" stroke-width="3"/>
+        <path d="M16 22 L24 12 L28 22 Z" fill="#ffbf00"/>
+        <path d="M36 22 L40 12 L48 22 Z" fill="#ffbf00"/>
+        <circle cx="26" cy="30" r="3.2" fill="#ffbf00"/>
+        <circle cx="38" cy="30" r="3.2" fill="#ffbf00"/>
+        <path d="M22 40c3 7 17 7 20 0" stroke="#ffbf00" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <circle cx="32" cy="36" r="2" fill="#ffbf00"/>
       </svg>
-      <div class="logo-text">Foxor <span>Editor</span></div>
+      <div class="logo-text">Amber <span>Universal Editor</span></div>
     </a>
     <nav>
       <a href="index.html">Home</a>
@@ -60,36 +60,58 @@
 
     <article class="release">
       <div class="release-header">
+        <span class="version">v1.2.1</span>
+        <span class="date">November 2026</span>
+      </div>
+      <ul>
+        <li><strong>Rebranding</strong> - Complete rebrand from Foxor Editor to Amber Universal Editor with new amber color theme</li>
+        <li><strong>New Features</strong> - Added Image Editor module with basic editing capabilities and filters</li>
+        <li><strong>New Features</strong> - Enhanced video editor with improved timeline and better responsive design</li>
+        <li><strong>UI Improvements</strong> - Redesigned all editor panels to be fully aligned and attached to browser screen</li>
+        <li><strong>UI Improvements</strong> - Fixed all cutoff and shrinking issues in editor workspaces</li>
+        <li><strong>UI Improvements</strong> - New amber-themed logo and favicon</li>
+        <li><strong>UI Improvements</strong> - Improved sticky header and tabs for better navigation</li>
+        <li><strong>UI Improvements</strong> - Enhanced fullscreen mode for immersive editing experience</li>
+        <li><strong>Style Updates</strong> - Updated color scheme from orange to amber (#ffbf00) throughout the application</li>
+        <li><strong>Style Updates</strong> - Improved button styles, hover effects, and transitions</li>
+        <li><strong>Responsive Design</strong> - Better mobile and tablet support for all editor modules</li>
+        <li><strong>Performance</strong> - Optimized workspace layout to prevent unnecessary scrolling and cutoff</li>
+      </ul>
+    </article>
+
+    <article class="release">
+      <div class="release-header">
         <span class="version">v1.2.0</span>
         <span class="date">September 2026</span>
       </div>
       <ul>
-        <li><strong>New Features</strong> — Added advanced video export presets with FFmpeg.wasm optimization</li>
-        <li><strong>New Features</strong> — Introduced ROM metadata auto-detection and validation</li>
-        <li><strong>New Features</strong> — Added syntax highlighting for Rust module with downloadable templates</li>
-        <li><strong>New Features</strong> — Implemented real-time audio waveform visualization in Music module</li>
-        <li><strong>New Features</strong> — Added dark/light theme toggle with system preference detection</li>
-        <li><strong>Bug Fixes</strong> — Fixed video timeline drag-and-drop positioning issues</li>
-        <li><strong>Bug Fixes</strong> — Resolved file download encoding issues for non-ASCII characters</li>
-        <li><strong>Bug Fixes</strong> — Fixed ROM module crash when loading corrupted files</li>
-        <li><strong>Bug Fixes</strong> — Corrected audio playback synchronization in Music module</li>
-        <li><strong>Bug Fixes</strong> — Fixed mobile responsiveness issues in editor workspace</li>
-        <li><strong>Performance</strong> — Optimized FFmpeg.wasm loading with lazy initialization</li>
-        <li><strong>Performance</strong> — Reduced memory usage in large file handling</li>
-        <li><strong>Enhancements</strong> — Improved error messages with actionable feedback</li>
-        <li><strong>Enhancements</strong> — Added keyboard shortcuts for common actions</li>
-        <li><strong>Enhancements</strong> — Updated documentation and help tooltips</li>
+        <li><strong>New Features</strong> - Added advanced video export presets with FFmpeg.wasm optimization</li>
+        <li><strong>New Features</strong> - Introduced ROM metadata auto-detection and validation</li>
+        <li><strong>New Features</strong> - Added syntax highlighting for Rust module with downloadable templates</li>
+        <li><strong>New Features</strong> - Implemented real-time audio waveform visualization in Music module</li>
+        <li><strong>New Features</strong> - Added dark/light theme toggle with system preference detection</li>
+        <li><strong>Bug Fixes</strong> - Fixed video timeline drag-and-drop positioning issues</li>
+        <li><strong>Bug Fixes</strong> - Resolved file download encoding issues for non-ASCII characters</li>
+        <li><strong>Bug Fixes</strong> - Fixed ROM module crash when loading corrupted files</li>
+        <li><strong>Bug Fixes</strong> - Corrected audio playback synchronization in Music module</li>
+        <li><strong>Bug Fixes</strong> - Fixed mobile responsiveness issues in editor workspace</li>
+        <li><strong>Performance</strong> - Optimized FFmpeg.wasm loading with lazy initialization</li>
+        <li><strong>Performance</strong> - Reduced memory usage in large file handling</li>
+        <li><strong>Enhancements</strong> - Improved error messages with actionable feedback</li>
+        <li><strong>Enhancements</strong> - Added keyboard shortcuts for common actions</li>
+        <li><strong>Enhancements</strong> - Updated documentation and help tooltips</li>
       </ul>
     </article>
+
     <article class="release">
       <div class="release-header">
         <span class="version">v1.1.7</span>
         <span class="date">August 31, 2026</span>
       </div>
       <ul>
-        <li><strong>New Foxor favicon</strong> — geometric fox mark (ears + snout)</li>
-        <li><strong>TypeScript / React</strong> under <code>src/</code> — types, ModuleCard, FlavorList</li>
-        <li><strong>Flavor 02 · Next.js</strong> — <a href="https://github.com/universal-editor-203/universal-editor-next">universal-editor-next</a></li>
+        <li><strong>New Foxor favicon</strong> - geometric fox mark (ears + snout)</li>
+        <li><strong>TypeScript / React</strong> under <code>src/</code> - types, ModuleCard, FlavorList</li>
+        <li><strong>Flavor 02 - Next.js</strong> - <a href="https://github.com/universal-editor-203/universal-editor-next">universal-editor-next</a></li>
         <li>Flavors section lists Blitz.js + Next.js as live</li>
       </ul>
     </article>
@@ -100,8 +122,8 @@
         <span class="date">August 30, 2026</span>
       </div>
       <ul>
-        <li>robots.txt · sitemap.xml · Wayback tutorial</li>
-        <li>Flavor 01 · Blitz.js</li>
+        <li>robots.txt - sitemap.xml - Wayback tutorial</li>
+        <li>Flavor 01 - Blitz.js</li>
         <li>Foxor branding on org profile</li>
       </ul>
     </article>
@@ -112,7 +134,7 @@
         <span class="date">August 27, 2026</span>
       </div>
       <ul>
-        <li>Filmora-style video UI · Rust module · shared CSS</li>
+        <li>Filmora-style video UI - Rust module - shared CSS</li>
       </ul>
     </article>
 
@@ -127,6 +149,6 @@
     </article>
   </main>
 
-  <footer>Foxor Editor · <a href="index.html">Home</a> · v1.2.0</footer>
+  <footer>Amber Universal Editor - <a href="index.html">Home</a> - v1.2.1</footer>
 </body>
 </html>
